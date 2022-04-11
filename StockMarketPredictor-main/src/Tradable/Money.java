@@ -1,7 +1,11 @@
 package Tradable;
 
-public class Money extends Tradable{
-    /** Enum type for money currency. Supports 5 currencies:
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+public class Money extends Tradable {
+    /**
+     * Enum type for money currency. Supports 5 currencies:
      * USD - United States Dollar
      * EUR - Euro
      * CHF - Swiss franc
@@ -9,40 +13,66 @@ public class Money extends Tradable{
      * GBP - Pound sterling
      */
 
+
+    private static CustomSlowMap currencyRates = new CustomSlowMap(new String[]{"USD", "EUR", "CHF", "JPY", "GBP"},
+            new BigDecimal[]{BigDecimal.valueOf(1),
+                    BigDecimal.valueOf(0.92),
+                    BigDecimal.valueOf(0.94),
+                    BigDecimal.valueOf(124.30),
+                    BigDecimal.valueOf(0.77)});
+
     //Probably have this in market
-    public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP};
-    /** The rates according to USD*/ //The rates should change
+    public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP}
+
+    ;
+    /**
+     * The rates according to USD
+     */ //The rates should change
     private static double[] rates = {1, 0.92, 0.94, 124.30, 0.77};
 
-    /** Instance variable of type MoneyCurrency storing the currency*/
-    private MoneyCurrency currency;
-    private double amount; //What to use instead of double?
+    /**
+     * Instance variable of type MoneyCurrency storing the currency
+     */
+    private String currency;
+    private BigDecimal amount; //What to use instead of double?
 
     //Constructors?
 
-    public MoneyCurrency getCurrency(){
+    public String getCurrency() {
         return currency;
     }
 
-    public double getAmount(){
+    public BigDecimal getAmount() {
         return this.amount;
     }
 
-    public void setAmount(double amount){
+    public void setAmount(BigDecimal amount) {
         //Checks?
         this.amount = amount;
     }
 
-    public static double changeCurrency(MoneyCurrency currency, double amount, MoneyCurrency changeTo, double marketPercentage){
-        int currencyIndex =  MoneyCurrency.valueOf(currency).ordinal();
-        amount *= rates[currencyIndex];
-        int changeToIndex = MoneyCurrency.valueOf(changeTo).ordinal();
-        amount *= rates[changeToIndex];
-        amount *= marketPercentage/100;
-        return amount;
+
+    public Money() {
+        this.amount = BigDecimal.ZERO;
     }
 
-    public void staking(double percentage, int year){
-        this.amount *= Math.pow(1+percentage/100, year);
+    public static BigDecimal changeCurrency(String initialCurrency, BigDecimal amount, String targetCurrency, BigDecimal marketPercentage) {
+
+        return amount.multiply(currencyRates.getValue(initialCurrency))
+                .multiply(currencyRates.getValue(targetCurrency))
+                .multiply(marketPercentage)
+                .divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP);
+
+    }
+
+    /**
+     * @param percentage Percentage in decimals [0:1]
+     * @param year       Amount of years
+     */
+    public void staking(BigDecimal percentage, int year) {
+
+        this.amount = amount.multiply((BigDecimal.valueOf(1).add(percentage.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP))).pow(year));
+
+//        this.amount = amount.multiply(BigDecimal.valueOf(Math.pow(1 + percentage/100, year)));
     }
 }
