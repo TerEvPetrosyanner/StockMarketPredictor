@@ -25,6 +25,7 @@ public class Crypto extends Money {
     }
 
 
+
     public static BigDecimal liquidity(Crypto first, Crypto second, double percentage, int month) {
         if (Crypto.changeCurrency(first.getCryptoCurrency(), amount, second.getCryptoCurrency(), BigDecimal.ZERO).equals(second.getAmount())) {
 

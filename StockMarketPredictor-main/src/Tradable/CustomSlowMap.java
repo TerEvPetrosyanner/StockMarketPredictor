@@ -2,16 +2,16 @@ package Tradable;
 
 import java.math.BigDecimal;
 
-public class CustomSlowMap {
-    private final String[] keys;
-    private final BigDecimal[] values;
+public class CustomSlowMap<K,V> {
+    private final K[] keys;
+    private final V[] values;
 
-    public CustomSlowMap(String[] keys, BigDecimal[] values) {
+    public CustomSlowMap(K[] keys, V[] values) {
         this.keys = keys;
         this.values = values;
     }
 
-    public BigDecimal getValue(String key) {
+    public V getValue(K key) {
         for (int i = 0; i < keys.length; i++) {
             if (keys[i].equals(key)) {
                 return values[i];
@@ -20,7 +20,7 @@ public class CustomSlowMap {
         return null;
     }
 
-    public void updateValue(String key, BigDecimal newValue) {
+    public void updateValue(K key, V newValue) {
         for (int i = 0; i < keys.length; i++) {
             if (keys[i].equals(key)) {
                values[i] = newValue;

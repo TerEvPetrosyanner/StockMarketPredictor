@@ -13,18 +13,9 @@ public class Money extends Tradable {
      * GBP - Pound sterling
      */
 
+    public static final Tradable.Tradable.TradableType type = TradableType.Money;
 
-    private static CustomSlowMap currencyRates = new CustomSlowMap(new String[]{"USD", "EUR", "CHF", "JPY", "GBP"},
-            new BigDecimal[]{BigDecimal.valueOf(1),
-                    BigDecimal.valueOf(0.92),
-                    BigDecimal.valueOf(0.94),
-                    BigDecimal.valueOf(124.30),
-                    BigDecimal.valueOf(0.77)});
 
-    //Probably have this in market
-    public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP}
-
-    ;
     /**
      * The rates according to USD
      */ //The rates should change
@@ -44,6 +35,31 @@ public class Money extends Tradable {
 
     public BigDecimal getAmount() {
         return this.amount;
+    }
+
+    private static final CustomSlowMap<String, BigDecimal> currencyRates = new CustomSlowMap<>(new String[]{"USD", "EUR", "CHF", "JPY", "GBP"},
+            new BigDecimal[]{BigDecimal.valueOf(1),
+                    BigDecimal.valueOf(0.92),
+                    BigDecimal.valueOf(0.94),
+                    BigDecimal.valueOf(124.30),
+                    BigDecimal.valueOf(0.77)});
+    /**
+     * Converts the Money from it's own currency to USD, then calculates the amount in USD($)
+     *
+     * @return converted price
+     */
+    public BigDecimal getValueInMoney() {
+        return currencyRates.getValue(currency).multiply(amount);
+    }
+
+    public void updatePrice(BigDecimal newValue) {
+        BigDecimal newValueInDollars = newValue.multiply(currencyRates.getValue(currency));
+        amount = new BigDecimal(newValueInDollars.toString());
+    }
+
+    @Override
+    public String getType() {
+        return type.toString();
     }
 
     public void setAmount(BigDecimal amount) {

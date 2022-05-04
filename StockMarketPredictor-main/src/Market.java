@@ -14,7 +14,6 @@ public class Market {
         private String[] descriptions = new String[]{};
         private CustomSlowMap[] effect = new CustomSlowMap[]{};
         private int eventNum;
-
         public Event() {
             eventNum = (int) (Math.random() * 5);
         }
@@ -89,6 +88,7 @@ public class Market {
     private ArrayList<Tradable> assets;
     private ArrayList<Transaction> history;
     private Event currentEvent;
+    public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP}
 
     public void loadHistory() {
         try {

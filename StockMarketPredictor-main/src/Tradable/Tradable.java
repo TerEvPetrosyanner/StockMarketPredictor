@@ -1,7 +1,5 @@
 package Tradable;
 
-import Owner.Owner;
-
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.UUID;
@@ -13,6 +11,12 @@ public abstract class Tradable {
     //To keep track of Tradable ID's
     private static int lastId = 0;
     private int myID;
+
+    public enum TradableType {
+        Crypto,
+        Money,
+        RealEstate
+    }
 
     public int getMyID(){
         return this.myID;
@@ -47,12 +51,12 @@ public abstract class Tradable {
 
     }
 
-    public abstract BigDecimal getPrice();
+    public abstract BigDecimal getValueInMoney();
 
-    public abstract void updatePrice();
+    public abstract void updatePrice(BigDecimal newValue);
 
     public abstract String getType();
 
-    public abstract int getID();
+    //public abstract int getID();
 
 }
