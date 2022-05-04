@@ -28,4 +28,8 @@ public class Owner{
     public UUID getId() {
         return uuid;
     }
+
+    public String getName(){
+        return this.name;
+    }
 }

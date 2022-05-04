@@ -1,5 +1,7 @@
 package Tradable;
 
+import java.math.BigDecimal;
+
 public class RealEstate extends Tradable{
 
     /**Instance variables */
@@ -8,7 +10,7 @@ public class RealEstate extends Tradable{
     //maybe need to add what currency is the price in?
 
     //for real estate an event can be "գին քցել",
-    private double price;
+    private BigDecimal price;
 
     //ft, m^2, km^2?
     private final double area;
@@ -24,7 +26,7 @@ public class RealEstate extends Tradable{
     public String getAddress(){return this.address;}
     public double getArea(){return this.area;}
 
-    public double getPrice(){return this.price;}
+    public BigDecimal getPrice(){return this.price;}
     public void setPrice(double Price){this.price=price;}
 
   //I think Money can become an abstract class as no object of it seems to be created
