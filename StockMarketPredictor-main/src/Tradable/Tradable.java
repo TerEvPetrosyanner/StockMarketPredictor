@@ -15,7 +15,9 @@ public abstract class Tradable {
     public enum TradableType {
         Crypto,
         Money,
-        RealEstate
+        RealEstate,
+        Good,
+        Stock
     }
 
     public int getMyID(){

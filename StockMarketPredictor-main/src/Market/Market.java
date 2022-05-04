@@ -1,3 +1,5 @@
+package Market;
+
 import Owner.Owner;
 import Tradable.Tradable;
 import Tradable.CustomSlowMap;
@@ -6,14 +8,17 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Market {
     public class Event {
-        private String[] descriptions = new String[]{};
-        private CustomSlowMap[] effect = new CustomSlowMap[]{};
-        private int eventNum;
+        private final String[] descriptions = new String[]{};
+        private final CustomSlowMap<Integer, BigDecimal>[] effect = new CustomSlowMap<>[]{};
+        private final int eventNum;
+
+
         public Event() {
             eventNum = (int) (Math.random() * 5);
         }
@@ -25,7 +30,7 @@ public class Market {
         private void affect() {
             for (int i = 0; i < assets.size(); i++) {
                 //Find good way to use Polymorphism
-                assets.get(i).updatePrice(assets.get(i) * effect[eventNum].getValue());
+                assets.get(i).updatePrice(assets.get(i).getValueInMoney().multiply(effect[eventNum].getValue(eventNum)));
             }
         }
     }

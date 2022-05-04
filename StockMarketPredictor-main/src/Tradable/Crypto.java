@@ -7,6 +7,7 @@ public class Crypto extends Money {
     //Non-fungible has to be immutable, while fungible mutable
 
     private static BigDecimal amount;
+    public static final Tradable.Tradable.TradableType type = TradableType.Crypto;
 
     public enum CryptoCurrency {USDT, BTC, ETH, ADA, SOL;}
     private CustomSlowMap currencyMap = new CustomSlowMap(new String[]{"USDT", "BTC", "ETH", "ADA", "SOL"},
@@ -34,4 +35,10 @@ public class Crypto extends Money {
         }
         return BigDecimal.ZERO;
     }
+
+    @Override
+    public String getType() {
+        return type.toString();
+    }
+
 }
