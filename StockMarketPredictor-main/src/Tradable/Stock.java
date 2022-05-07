@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class Stock extends Tradable{
     private Money valueInMoney;
-    public static final Tradable.Tradable.TradableType type = TradableType.Stock;
+    public static final TradableType type = TradableType.Stock;
 
     @Override
     public BigDecimal getValueInMoney() {

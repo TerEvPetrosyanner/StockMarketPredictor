@@ -13,7 +13,7 @@ public class Money extends Tradable {
      * GBP - Pound sterling
      */
 
-    public static final Tradable.Tradable.TradableType type = TradableType.Money;
+    public static final TradableType type = TradableType.Money;
 
 
     /**

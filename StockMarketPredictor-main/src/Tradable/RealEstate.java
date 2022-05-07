@@ -15,7 +15,7 @@ public class RealEstate extends Tradable{
     //ft, m^2, km^2?
     private final double area;
 
-    public static final Tradable.Tradable.TradableType type = TradableType.RealEstate;
+    public static final TradableType type = TradableType.RealEstate;
     //anything more to be added?
 
     /*Constructors*/
