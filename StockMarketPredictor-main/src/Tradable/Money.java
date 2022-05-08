@@ -72,8 +72,14 @@ public class Money extends Tradable {
         this.amount = BigDecimal.ZERO;
     }
 
-    public Money (BigDecimal amount){
+    public Money (BigDecimal amount, String currency){
         this.amount = new BigDecimal(amount.toString());
+        this.currency = currency;
+    }
+
+    public Money(Money m){
+        this.amount = m.getAmount();
+        this.currency = m.getCurrency();
     }
 
     public static BigDecimal changeCurrency(String initialCurrency, BigDecimal amount, String targetCurrency, BigDecimal marketPercentage) {

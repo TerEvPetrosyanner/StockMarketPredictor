@@ -17,7 +17,7 @@ public class Good extends Tradable {
 
 
     public Good(String goodName, BigDecimal money, UnitType type, double amount) {
-        valueInMoney = new Money(money);
+        valueInMoney = new Money(money, "USD");
         this.goodName = goodName;
         this.amount = amount;
         unitType = type;
@@ -25,7 +25,7 @@ public class Good extends Tradable {
 
     public Good() {
         this.goodName = "Banana";
-        valueInMoney = new Money(new BigDecimal(2));
+        valueInMoney = new Money(new BigDecimal(2), "USD");
         this.amount = 1;
         this.unitType = UnitType.Kg;
     }
