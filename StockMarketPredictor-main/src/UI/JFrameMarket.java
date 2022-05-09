@@ -11,9 +11,10 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 
-public class JFrameMarket extends JFrame implements WindowListener{
+public class JFrameMarket extends JFrame {
     Timer timer;
     int second;
+
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -29,23 +30,23 @@ public class JFrameMarket extends JFrame implements WindowListener{
     JTextField  jTextField1 = new JTextField();
 
     JTabbedPane  jTabbedPane1 = new JTabbedPane();
+    JScrollPane innerStockPanel = new JScrollPane();
+    JPanel StockPanel = new JPanel();
 
-    JScrollPane jScrollPane1 = new JScrollPane();
 
     Icon iconProfile;
     Icon iconSearch;
 
-    JPanel StockPanel = new JPanel();
-
+    JScrollPane newsScroll = new JScrollPane();
 
     public String newsLine;
 
     JTextArea newsArea=new JTextArea();
-
-
+    JPanel newsPanel = new JPanel();
+    JPanel newsTextPanel = new JPanel();
     public JFrameMarket() {
         setTitle("Bazzar");
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(screenSize);
         setLayout(new BorderLayout());
         jTextField1.setToolTipText("Input");
@@ -86,9 +87,21 @@ public class JFrameMarket extends JFrame implements WindowListener{
      jLabel3.setForeground(itemColor);
 
 
+     BoxLayout tradableLayout = new BoxLayout(StockPanel,BoxLayout.Y_AXIS);
 
-     jTabbedPane1.addTab("Stock",StockPanel);
-        jTabbedPane1.addTab("Crypto", new JLabel("Crypto"));
+     jTabbedPane1.add(innerStockPanel);
+
+     innerStockPanel.setViewportView(StockPanel);
+     StockPanel.setBackground(backgroundColor);
+     StockPanel.setLayout(tradableLayout);
+
+
+
+
+
+
+        jTabbedPane1.addTab("Stock",innerStockPanel);
+        jTabbedPane1.addTab("Crypto", new JLabel("Currency"));
         jTabbedPane1.addTab("Currency", new JLabel("Currency"));
         jTabbedPane1.addTab("Good", new JLabel("Good"));
         jTabbedPane1.addTab("Real Estate",new JLabel("Estate"));
@@ -137,11 +150,16 @@ public class JFrameMarket extends JFrame implements WindowListener{
         second =0;
         timeFlow();
         timer.start();
-
+//        BoxLayout newsLayout = new BoxLayout(newsTextPanel,BoxLayout.Y_AXIS);
+//
+//        newsScroll.setViewportView(newsTextPanel);
+//        newsTextPanel.setLayout(newsLayout);
+//        newsScroll.setBackground(backgroundColor);
 
 
         GroupLayout toolBarLayout = new GroupLayout(toolBar);
         toolBar.setLayout(toolBarLayout);
+
 
         toolBarLayout.setHorizontalGroup(
                 toolBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -174,8 +192,55 @@ public class JFrameMarket extends JFrame implements WindowListener{
                                                 .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
         );
 
-        jLabel3.setFont(new Font("Arial", Font.BOLD,20));
-
+//        jLabel3.setFont(new Font("Arial", Font.BOLD,20));
+//
+//        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel2);
+//        jPanel2.setLayout(jPanel1Layout);
+//        jPanel1Layout.setHorizontalGroup(
+//                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGroup(jPanel1Layout.createSequentialGroup()
+//                                .addContainerGap()
+//                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+//                                .addContainerGap())
+//                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                .addGroup(jPanel1Layout.createSequentialGroup()
+//                                        .addContainerGap()
+//                                        .addComponent(newsScroll)
+//                                        .addContainerGap()))
+//        );
+//        jPanel1Layout.setVerticalGroup(
+//                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGroup(jPanel1Layout.createSequentialGroup()
+//                                .addContainerGap()
+//                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                .addContainerGap(417, Short.MAX_VALUE))
+//                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+//                                        .addContainerGap(78, Short.MAX_VALUE)
+//                                        .addComponent(newsScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                        .addContainerGap(20, Short.MAX_VALUE)))
+//        );
+//
+//        javax.swing.GroupLayout layout2 = new javax.swing.GroupLayout(getContentPane());
+//        getContentPane().setLayout(layout2);
+//        layout2.setHorizontalGroup(
+//                layout2.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGap(0, 281, Short.MAX_VALUE)
+//                        .addGroup(layout2.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                .addGroup(layout2.createSequentialGroup()
+//                                        .addContainerGap()
+//                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//                                        .addContainerGap()))
+//        );
+//        layout2.setVerticalGroup(
+//                layout2.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGap(0, 495, Short.MAX_VALUE)
+//                        .addGroup(layout2.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                .addGroup(layout2.createSequentialGroup()
+//                                        .addContainerGap()
+//                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//                                        .addContainerGap()))
+//        );
 
 
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
@@ -255,60 +320,64 @@ public class JFrameMarket extends JFrame implements WindowListener{
 
     public void timeFlow()
     {
-        timer = new Timer(1000, new ActionListener() {
+        timer = new Timer((int)(Math.random()*10000), new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
                 Market.Event event = new Market.Event();
                 newsLine = event.getDescription();
                 JLabel temp= new JLabel(newsLine);
-                newsArea.append(temp.getText() + " AFFECTS" + "\n");
+                newsArea.setEditable(false);
+                newsArea.append("\n"+temp.getText()+"\n");
 
+                addTradeableObject();
            }
        });
 
+
     }
 
-    public JTextArea createTradableObject()
+    public void addTradeableObject()
     {
-        JTextArea object = new JTextArea();
 
-        return object;
+        JPanel tradeablePanel = new JPanel();
+        JLabel tradableInfo = new JLabel();
+        tradableInfo.setFont(new Font("Arial",Font.BOLD,16));
+       //this to be changed
+        tradableInfo.setText("Stock | AAPL | Apple Inc. | $152.47");
+
+        tradableInfo.setSize(20,20);
+
+        JButton buyBut = new JButton("Buy");
+        buyBut.setForeground(itemColor);
+        tradeablePanel.setBackground(backgroundColor);
+        tradableInfo.setForeground(itemColor);
+        tradableInfo.setBorder(BorderFactory.createLineBorder(itemColor,1));
+
+        GroupLayout tablePanel = new GroupLayout(tradeablePanel);
+        tradeablePanel.setLayout(tablePanel);
+        tablePanel.setHorizontalGroup(
+                tablePanel.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(tablePanel.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(tradableInfo, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buyBut, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+        );
+        tablePanel.setVerticalGroup(
+                tablePanel.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(tablePanel.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(tablePanel.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(tradableInfo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(buyBut))
+                                .addContainerGap())
+        );
+        tablePanel.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {buyBut, tradableInfo});
+
+        StockPanel.add(tradeablePanel);
     }
 
 
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-        System.exit(0);
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }
 }
 
