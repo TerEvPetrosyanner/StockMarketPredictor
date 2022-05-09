@@ -14,8 +14,8 @@
         import java.util.Scanner;
 
 public class Market {
-    public class Event {
-        private final String[] descriptions = new String[]{"Civil war", "Thanos attack", "Spider Man Died"};
+    public static class Event {
+        private final String[] descriptions = new String[]{"Civil war", "Thanos attack", "Spider Man Died","Johnny Depp lost trial"};
         private final CustomSlowMap<Integer, BigDecimal> effect = new CustomSlowMap<>(new Integer[]{0,1,2,3,4,5},new BigDecimal[]{new BigDecimal(0.17) });
         private final int eventNum;
 
@@ -90,7 +90,7 @@ public class Market {
         //Some search stuff for Transactions?
     }
 
-    private ArrayList<Tradable> assets;
+    private static ArrayList<Tradable> assets;
     private ArrayList<Transaction> history;
     private Event currentEvent;
     public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP}

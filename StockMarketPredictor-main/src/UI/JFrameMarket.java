@@ -6,8 +6,14 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-public class JFrameMarket extends JFrame{
+
+public class JFrameMarket extends JFrame implements WindowListener{
+    Timer timer;
+    int second;
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -15,13 +21,34 @@ public class JFrameMarket extends JFrame{
     private Color itemColor= new Color(255, 178, 15);
     GridBagConstraints gbc = new GridBagConstraints();
 
+    JPanel toolBar = new JPanel();
+    JPanel jPanel2 = new JPanel();
+    JLabel jLabel3 = new JLabel("BREAKING NEWS", jPanel2.getHeight()/2);
+    JLabel jLabel1 = new JLabel();
+    JLabel jLabel2 = new JLabel();
+    JTextField  jTextField1 = new JTextField();
+
+    JTabbedPane  jTabbedPane1 = new JTabbedPane();
+
+    JScrollPane jScrollPane1 = new JScrollPane();
+
+    Icon iconProfile;
+    Icon iconSearch;
+
+    JPanel StockPanel = new JPanel();
+
+
+    public String newsLine;
+
+    JTextArea newsArea=new JTextArea();
+
 
     public JFrameMarket() {
-        setTitle("someth");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Bazzar");
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(screenSize);
         setLayout(new BorderLayout());
-
+        jTextField1.setToolTipText("Input");
 
 
 
@@ -30,11 +57,14 @@ public class JFrameMarket extends JFrame{
         this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, backgroundColor));
         setLayout(new GridBagLayout());
 
-        JPanel toolBar = new JPanel();
-        JPanel jPanel2 = new JPanel();
-        JLabel jLabel3 = new JLabel();
 
-        Icon iconProfile;
+        newsArea.setBackground(backgroundColor);
+        newsArea.setForeground(itemColor);
+        newsArea.setLineWrap(true);
+        newsArea.setWrapStyleWord(true);
+
+
+
         iconProfile = new ImageIcon(new ImageIcon("./icons/profileIcon.png").getImage().getScaledInstance(18,18, Image.SCALE_AREA_AVERAGING));
          JButton profilePic = new JButton(iconProfile);
          profilePic.setOpaque(false);
@@ -43,8 +73,7 @@ public class JFrameMarket extends JFrame{
         profilePic.setMargin(new Insets(0,16,0,0));
 
 
-        Icon iconSearch;
-        iconSearch = new ImageIcon(new ImageIcon("./icons/profileIcon.png").getImage().getScaledInstance(18,18, Image.SCALE_AREA_AVERAGING));
+        iconSearch = new ImageIcon(new ImageIcon("./icons/search.png").getImage().getScaledInstance(18,18, Image.SCALE_AREA_AVERAGING));
         JButton searchButton = new JButton(iconSearch);
         searchButton.setOpaque(false);
         searchButton.setBorderPainted(false);
@@ -52,21 +81,21 @@ public class JFrameMarket extends JFrame{
         searchButton.setMargin(new Insets(0,16,0,0));
 
 
-        JLabel jLabel1 = new JLabel();
-        JLabel jLabel2 = new JLabel();
-        JTextField  jTextField1 = new JTextField();
-
-     JTabbedPane  jTabbedPane1 = new JTabbedPane();
-
      jLabel1.setForeground(itemColor);
      jLabel2.setForeground(itemColor);
      jLabel3.setForeground(itemColor);
 
-     jTabbedPane1.addTab("Stock", new JLabel("Stock"));
+
+
+     jTabbedPane1.addTab("Stock",StockPanel);
         jTabbedPane1.addTab("Crypto", new JLabel("Crypto"));
         jTabbedPane1.addTab("Currency", new JLabel("Currency"));
         jTabbedPane1.addTab("Good", new JLabel("Good"));
-        jTabbedPane1.addTab("Real Estate", new JLabel("Estate"));
+        jTabbedPane1.addTab("Real Estate",new JLabel("Estate"));
+        jTabbedPane1.addTab("Transactions", new JLabel("Transactions"));
+        jTabbedPane1.setBackground(backgroundColor);
+        jTabbedPane1.setForeground(itemColor);
+
 
         toolBar.setBackground(backgroundColor);
         jPanel2.setBackground(backgroundColor);
@@ -75,8 +104,9 @@ public class JFrameMarket extends JFrame{
         jPanel2.setBorder(new LineBorder(Color.white));
 
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1650, 1080));
+
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1600, 820));
 
         profilePic
                 .setText("profilePic" +
@@ -94,7 +124,6 @@ public class JFrameMarket extends JFrame{
 
         jLabel2.setText("balanceData");
 
-        jTextField1.setText("jTextField1");
 
         searchButton.setText("profilePic" +
                 "");
@@ -105,16 +134,23 @@ public class JFrameMarket extends JFrame{
             }
         });
 
+        second =0;
+        timeFlow();
+        timer.start();
+
+
+
         GroupLayout toolBarLayout = new GroupLayout(toolBar);
         toolBar.setLayout(toolBarLayout);
+
         toolBarLayout.setHorizontalGroup(
                 toolBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(GroupLayout.Alignment.TRAILING, toolBarLayout.createSequentialGroup()
-                                .addContainerGap(81, Short.MAX_VALUE)
+
+                                .addContainerGap(100, Short.MAX_VALUE)
                                 .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
                                 .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
+                                .addGap(300, 300, 300)
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2)
@@ -138,23 +174,35 @@ public class JFrameMarket extends JFrame{
                                                 .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
         );
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setFont(new Font("Arial", Font.BOLD,20));
+
+
 
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
                 jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
+                                .addContainerGap(50,Short.MAX_VALUE)
                                 .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                                .addContainerGap())
+                                .addContainerGap(50,Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210,GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap()))
         );
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel3)
-                                .addContainerGap(234, Short.MAX_VALUE))
+                                .addContainerGap(0, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addContainerGap(0, Short.MAX_VALUE)
+                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 600,GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(36, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.setToolTipText("");
@@ -187,16 +235,80 @@ public class JFrameMarket extends JFrame{
                                                 .addComponent(jTabbedPane1)))
                                 .addContainerGap())
         );
-
         pack();
 
 
     }
 
+
     private void searchButtonActionPerformed(ActionEvent evt) {
+        //search functionality
+
     }
 
     private void profilePicActionPerformed(ActionEvent evt) {
+        dispose();
+        new JFrameProfile();
     }
 
+
+
+    public void timeFlow()
+    {
+        timer = new Timer(1000, new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+                Market.Event event = new Market.Event();
+                newsLine = event.getDescription();
+                JLabel temp= new JLabel(newsLine);
+                newsArea.append(temp.getText() + " AFFECTS" + "\n");
+
+           }
+       });
+
+    }
+
+    public JTextArea createTradableObject()
+    {
+        JTextArea object = new JTextArea();
+
+        return object;
+    }
+
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.exit(0);
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }
+
