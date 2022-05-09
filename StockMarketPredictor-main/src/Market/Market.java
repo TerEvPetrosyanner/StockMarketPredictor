@@ -35,7 +35,7 @@ public class Market {
         }
     }
 
-    public class Transaction {
+    public static class Transaction {
         private String date;
         private String owner;
         private String tradableType;
@@ -112,7 +112,7 @@ public class Market {
         return this.assets;
     }
 
-    private Tradable findTradableByID(int id){
+    private static Tradable findTradableByID(int id){
         for(int i = 0; i<assets.size(); i++){
             if(assets.get(i).getMyID() == id) {
                 return assets.get(i); //Copy Constructor?

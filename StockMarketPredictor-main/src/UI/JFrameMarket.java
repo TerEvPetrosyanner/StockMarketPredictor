@@ -20,7 +20,6 @@ public class JFrameMarket extends JFrame {
 
     private Color backgroundColor = new Color(13, 19, 23);
     private Color itemColor= new Color(255, 178, 15);
-    GridBagConstraints gbc = new GridBagConstraints();
 
     JPanel toolBar = new JPanel();
     JPanel jPanel2 = new JPanel();
@@ -44,13 +43,17 @@ public class JFrameMarket extends JFrame {
     JTextArea newsArea=new JTextArea();
     JPanel newsPanel = new JPanel();
     JPanel newsTextPanel = new JPanel();
+
+
     public JFrameMarket() {
         setTitle("Bazzar");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(screenSize);
         setLayout(new BorderLayout());
         jTextField1.setToolTipText("Input");
 
+
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1600, 820));
 
 
         Container mainContainer = this.getContentPane();
@@ -118,8 +121,6 @@ public class JFrameMarket extends JFrame {
 
 
 
-        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1600, 820));
 
         profilePic
                 .setText("profilePic" +
@@ -327,16 +328,27 @@ public class JFrameMarket extends JFrame {
                 newsLine = event.getDescription();
                 JLabel temp= new JLabel(newsLine);
                 newsArea.setEditable(false);
+                newsArea.setFont(new Font("Arial",Font.BOLD,17));
                 newsArea.append("\n"+temp.getText()+"\n");
 
-                addTradeableObject();
+                addTradeableObject(StockPanel);
            }
        });
 
 
     }
+    public void addTransactions()
+    {
+        Market.Event a =new Market.Event();
+        JPanel transactionPanel = new JPanel();
 
-    public void addTradeableObject()
+        JLabel transactionInfo = new JLabel();
+
+
+    }
+
+
+    public void addTradeableObject(JPanel panel)
     {
 
         JPanel tradeablePanel = new JPanel();
@@ -375,7 +387,7 @@ public class JFrameMarket extends JFrame {
         );
         tablePanel.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {buyBut, tradableInfo});
 
-        StockPanel.add(tradeablePanel);
+        panel.add(tradeablePanel);
     }
 
 
