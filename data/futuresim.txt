@@ -1,5 +1,4 @@
 Stock | AAPL | Apple Inc. | $152.47
-
 RealEstate | 10M | Apple Inc. | $152.47
 Crypto | AAPL | Apple Inc. | $152.47
 Crypto | ETH | Ethereum | $152.47

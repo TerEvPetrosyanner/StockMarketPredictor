@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class JFrameMarket extends JFrame {
 
-    boolean tempflag=false;
 
     Timer timer;
     int second;
@@ -52,6 +51,7 @@ public class JFrameMarket extends JFrame {
 
     public JFrameMarket() {
         market = new Market();
+
         constructTradeableObject();
         setTitle("Bazzar");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,14 +61,11 @@ public class JFrameMarket extends JFrame {
 
 
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1580, 820));
 
 
         Container mainContainer = this.getContentPane();
         mainContainer.setBackground(backgroundColor);
 
-        this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, backgroundColor));
-        setLayout(new GridBagLayout());
 
 
         newsArea.setBackground(backgroundColor);
@@ -410,6 +407,7 @@ public class JFrameMarket extends JFrame {
                     break;
 
                 case "Crypto":
+
                     addTradeableObject(CryptoPanel,tradableInfo.getText());
                     break;
 
@@ -432,38 +430,41 @@ public class JFrameMarket extends JFrame {
 
 
          JButton buyBut = new JButton("Buy");
-
+        tradableInfo.setText("Suren");
         buyBut.setForeground(itemColor);
         tradeablePanel.setBackground(backgroundColor);
         tradableInfo.setForeground(itemColor);
         tradableInfo.setBorder(BorderFactory.createLineBorder(itemColor, 1));
 
-        GroupLayout tablePanel = new GroupLayout(tradeablePanel);
-        tradeablePanel.setLayout(tablePanel);
-        tablePanel.setHorizontalGroup(
-                tablePanel.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(tablePanel.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(tradableInfo, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buyBut, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-        );
-        tablePanel.setVerticalGroup(
-                tablePanel.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(tablePanel.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(tablePanel.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tradableInfo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(buyBut))
-                                .addContainerGap())
-        );
+        tradeablePanel.setLayout(new BorderLayout());
+        tradeablePanel.add(tradableInfo,BorderLayout.NORTH);
 
         panel.add(tradeablePanel);
-        tradeablePanel.remove(tradableInfo);
-        tradeablePanel.remove(buyBut);
+
 
         tradableInfo.setText("");
+//        GroupLayout tablePanel = new GroupLayout(tradeablePanel);
+//        tradeablePanel.setLayout(tablePanel);
+//        tablePanel.setHorizontalGroup(
+//                tablePanel.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGroup(tablePanel.createSequentialGroup()
+//                                .addContainerGap()
+//                                .addComponent(tradableInfo, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+//                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//                                .addComponent(buyBut, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+//                                .addContainerGap())
+//        );
+//        tablePanel.setVerticalGroup(
+//                tablePanel.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGroup(tablePanel.createSequentialGroup()
+//                                .addContainerGap()
+//                                .addGroup(tablePanel.createParallelGroup(GroupLayout.Alignment.BASELINE)
+//                                        .addComponent(tradableInfo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+//                                        .addComponent(buyBut))
+//                                .addContainerGap())
+//        );
+
+
     }
 
 
