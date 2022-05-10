@@ -1,4 +1,27 @@
-Stock | AAPL | Apple Inc. | 2000
-Good | Banana | 87 | KG
-RealEstate | Baker Str. 1 | 40 | 45000
-Crypto | BTC | 12
+Stock | AAPL | Apple Inc. | $152.47
+
+RealEstate | 10M | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
+Crypto | AAPL | Apple Inc. | $152.47
