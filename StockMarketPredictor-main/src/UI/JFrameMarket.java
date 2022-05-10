@@ -1,34 +1,38 @@
 package UI;
 
+import DataReading.DataReader;
 import Market.Market;
+import Tradable.RealEstate;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
 
 
 public class JFrameMarket extends JFrame {
+
+    boolean tempflag=false;
+
     Timer timer;
     int second;
+    public JPanel EstatePanel = new JPanel();
+    public JPanel CryptoPanel = new JPanel();
+    public JPanel CurrencyPanel = new JPanel();
+    public JPanel GoodPanel = new JPanel();
+    public Color backgroundColor = new Color(13, 19, 23);
+    public Color itemColor = new Color(255, 178, 15);
 
-
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-    private Color backgroundColor = new Color(13, 19, 23);
-    private Color itemColor= new Color(255, 178, 15);
 
     JPanel toolBar = new JPanel();
     JPanel jPanel2 = new JPanel();
-    JLabel jLabel3 = new JLabel("BREAKING NEWS", jPanel2.getHeight()/2);
+    JLabel jLabel3 = new JLabel("BREAKING NEWS", jPanel2.getHeight() / 2);
     JLabel jLabel1 = new JLabel();
     JLabel jLabel2 = new JLabel();
-    JTextField  jTextField1 = new JTextField();
+    JTextField jTextField1 = new JTextField();
 
-    JTabbedPane  jTabbedPane1 = new JTabbedPane();
+    JTabbedPane jTabbedPane1 = new JTabbedPane();
     JScrollPane innerStockPanel = new JScrollPane();
     JPanel StockPanel = new JPanel();
 
@@ -39,12 +43,14 @@ public class JFrameMarket extends JFrame {
 
     public String newsLine;
 
-    JTextArea newsArea=new JTextArea();
+    JTextArea newsArea = new JTextArea();
 
 
     public JFrameMarket() {
         setTitle("Bazzar");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+
         jTextField1.setToolTipText("Input");
 
 
@@ -65,46 +71,69 @@ public class JFrameMarket extends JFrame {
         newsArea.setWrapStyleWord(true);
 
 
-
-        iconProfile = new ImageIcon(new ImageIcon("./icons/profileIcon.png").getImage().getScaledInstance(18,18, Image.SCALE_AREA_AVERAGING));
-         JButton profilePic = new JButton(iconProfile);
-         profilePic.setOpaque(false);
-         profilePic.setBorderPainted(false);
+        iconProfile = new ImageIcon(new ImageIcon("./icons/profileIcon.png").getImage().getScaledInstance(18, 18, Image.SCALE_AREA_AVERAGING));
+        JButton profilePic = new JButton(iconProfile);
+        profilePic.setOpaque(false);
+        profilePic.setBorderPainted(false);
         profilePic.setContentAreaFilled(false);
-        profilePic.setMargin(new Insets(0,16,0,0));
+        profilePic.setMargin(new Insets(0, 16, 0, 0));
 
 
-        iconSearch = new ImageIcon(new ImageIcon("./icons/search.png").getImage().getScaledInstance(18,18, Image.SCALE_AREA_AVERAGING));
+        iconSearch = new ImageIcon(new ImageIcon("./icons/search.png").getImage().getScaledInstance(18, 18, Image.SCALE_AREA_AVERAGING));
         JButton searchButton = new JButton(iconSearch);
         searchButton.setOpaque(false);
         searchButton.setBorderPainted(false);
         searchButton.setContentAreaFilled(false);
-        searchButton.setMargin(new Insets(0,16,0,0));
+        searchButton.setMargin(new Insets(0, 16, 0, 0));
 
 
-     jLabel1.setForeground(itemColor);
-     jLabel2.setForeground(itemColor);
-     jLabel3.setForeground(itemColor);
+        jLabel1.setForeground(itemColor);
+        jLabel2.setForeground(itemColor);
+        jLabel3.setForeground(itemColor);
 
 
-     BoxLayout tradableLayout = new BoxLayout(StockPanel,BoxLayout.Y_AXIS);
+        BoxLayout tradableLayout = new BoxLayout(StockPanel, BoxLayout.Y_AXIS);
+//stock
+        jTabbedPane1.add(innerStockPanel);
 
-     jTabbedPane1.add(innerStockPanel);
+        innerStockPanel.setViewportView(StockPanel);
+        StockPanel.setBackground(backgroundColor);
+        StockPanel.setLayout(tradableLayout);
 
-     innerStockPanel.setViewportView(StockPanel);
-     StockPanel.setBackground(backgroundColor);
-     StockPanel.setLayout(tradableLayout);
+ //crypto
+        BoxLayout ctradableLayout = new BoxLayout(CryptoPanel, BoxLayout.Y_AXIS);
+
+        JScrollPane innerCryptoPanel = new JScrollPane();
+        jTabbedPane1.add(innerCryptoPanel);
+
+        innerCryptoPanel.setViewportView(CryptoPanel);
+        CryptoPanel.setBackground(backgroundColor);
+        CryptoPanel.setLayout(ctradableLayout);
 
 
+//Good
+        BoxLayout gtradableLayout = new BoxLayout(GoodPanel, BoxLayout.Y_AXIS);
 
+        JScrollPane innerGoodPanel = new JScrollPane();
+        jTabbedPane1.add(innerGoodPanel);
 
+        innerGoodPanel.setViewportView(GoodPanel);
+        GoodPanel.setBackground(backgroundColor);
+        GoodPanel.setLayout(gtradableLayout);
+//Real Estate
+        BoxLayout rtradableLayout = new BoxLayout(EstatePanel, BoxLayout.Y_AXIS);
 
+        JScrollPane innerEstatePanel = new JScrollPane();
+        jTabbedPane1.add(innerEstatePanel);
 
-        jTabbedPane1.addTab("Stock",innerStockPanel);
-        jTabbedPane1.addTab("Crypto", new JLabel("Currency"));
-        jTabbedPane1.addTab("Currency", new JLabel("Currency"));
-        jTabbedPane1.addTab("Good", new JLabel("Good"));
-        jTabbedPane1.addTab("Real Estate",new JLabel("Estate"));
+        innerEstatePanel.setViewportView(EstatePanel);
+        EstatePanel.setBackground(backgroundColor);
+        EstatePanel.setLayout(rtradableLayout);
+
+        jTabbedPane1.addTab("Stock", innerStockPanel);
+        jTabbedPane1.addTab("Crypto", innerCryptoPanel);
+        jTabbedPane1.addTab("Good", innerGoodPanel);
+        jTabbedPane1.addTab("Real Estate", innerEstatePanel);
         jTabbedPane1.addTab("Transactions", new JLabel("Transactions"));
         jTabbedPane1.setBackground(backgroundColor);
         jTabbedPane1.setForeground(itemColor);
@@ -117,35 +146,28 @@ public class JFrameMarket extends JFrame {
         jPanel2.setBorder(new LineBorder(Color.white));
 
 
-
-
         profilePic
                 .setText("profilePic" +
                         "");
         profilePic
                 .setPreferredSize(new java.awt.Dimension(75, 24));
         profilePic
-                .addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                profilePicActionPerformed(evt);
-            }
-        });
+                .addActionListener(this::profilePicActionPerformed);
 
         jLabel1.setText("Balance");
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 14));
 
-        jLabel2.setText("balanceData");
+
+        jLabel2.setText("23");
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 14));
 
 
         searchButton.setText("profilePic" +
                 "");
         searchButton.setPreferredSize(new java.awt.Dimension(75, 24));
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
-            }
-        });
+        searchButton.addActionListener(this::searchButtonActionPerformed);
 
-        second =0;
+        second = 0;
         timeFlow();
         timer.start();
 //        BoxLayout newsLayout = new BoxLayout(newsTextPanel,BoxLayout.Y_AXIS);
@@ -246,13 +268,13 @@ public class JFrameMarket extends JFrame {
         jPanel2Layout.setHorizontalGroup(
                 jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap(50,Short.MAX_VALUE)
+                                .addContainerGap(50, Short.MAX_VALUE)
                                 .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                                .addContainerGap(50,Short.MAX_VALUE))
+                                .addContainerGap(50, Short.MAX_VALUE))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                         .addContainerGap()
-                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210,GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap()))
         );
         jPanel2Layout.setVerticalGroup(
@@ -264,7 +286,7 @@ public class JFrameMarket extends JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                         .addContainerGap(0, Short.MAX_VALUE)
-                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 600,GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap(36, Short.MAX_VALUE)))
         );
 
@@ -298,9 +320,22 @@ public class JFrameMarket extends JFrame {
                                                 .addComponent(jTabbedPane1)))
                                 .addContainerGap())
         );
-        pack();
+        boolean alreadyExecuted=false;
+        if(!alreadyExecuted)
+        {
+            try{
+                constructTradeableObject();
+                alreadyExecuted=true;
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            pack();
 
 
+
+        }
     }
 
 
@@ -315,52 +350,64 @@ public class JFrameMarket extends JFrame {
     }
 
 
+    public void timeFlow() {
+        timer = new Timer((int) (Math.random() * 10000), e -> {
+            Market.Event event = new Market.Event();
+            newsLine = event.getDescription();
+            JLabel temp = new JLabel(newsLine);
+            newsArea.setEditable(false);
+            newsArea.setFont(new Font("Arial", Font.BOLD, 17));
+            newsArea.append("\n" + temp.getText() + "\n");
 
-    public void timeFlow()
-    {
-        timer = new Timer((int)(Math.random()*10000), new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-                Market.Event event = new Market.Event();
-                newsLine = event.getDescription();
-                JLabel temp= new JLabel(newsLine);
-                newsArea.setEditable(false);
-                newsArea.setFont(new Font("Arial",Font.BOLD,17));
-                newsArea.append("\n"+temp.getText()+"\n");
-
-                addTradeableObject(StockPanel);
-           }
-       });
-
-
-    }
-    public void addTransactions()
-    {
-        Market.Event a =new Market.Event();
-        JPanel transactionPanel = new JPanel();
-
-        JLabel transactionInfo = new JLabel();
+        });
 
 
     }
 
 
-    public void addTradeableObject(JPanel panel)
-    {
 
+   public JLabel tradableInfo = new JLabel("");
+
+    public void constructTradeableObject() throws FileNotFoundException {
+
+
+        DataReader.getTradables();
+        for (int i = 0; i < DataReader.result.size(); i++) {
+            switch (DataReader.result.get(i).getType()) {
+                case "Stock":
+                    tradableInfo.setText(DataReader.result.get(i).getType());
+                    addTradeableObject(StockPanel,tradableInfo.getText());
+                    break;
+                case "Crypto":
+                    tradableInfo.setText(DataReader.result.get(i).getType());
+                    addTradeableObject(CryptoPanel,tradableInfo.getText());
+                    break;
+                case "Good":
+                    tradableInfo.setText(DataReader.result.get(i).getType());
+                    addTradeableObject(GoodPanel,tradableInfo.getText());
+                    break;
+                case "RealEstate":
+                    tradableInfo.setText(DataReader.result.get(i).getType());
+                    addTradeableObject(EstatePanel,tradableInfo.getText());
+                    break;
+            }
+
+
+        }
+    }
+
+
+
+    public void addTradeableObject(JPanel panel, String text) {
         JPanel tradeablePanel = new JPanel();
-        JLabel tradableInfo = new JLabel();
-        tradableInfo.setFont(new Font("Arial",Font.BOLD,16));
-       //this to be changed
-        tradableInfo.setText("Stock | AAPL | Apple Inc. | $152.47");
 
-        tradableInfo.setSize(20,20);
 
-        JButton buyBut = new JButton("Buy");
+         JButton buyBut = new JButton("Buy");
+
         buyBut.setForeground(itemColor);
         tradeablePanel.setBackground(backgroundColor);
         tradableInfo.setForeground(itemColor);
-        tradableInfo.setBorder(BorderFactory.createLineBorder(itemColor,1));
+        tradableInfo.setBorder(BorderFactory.createLineBorder(itemColor, 1));
 
         GroupLayout tablePanel = new GroupLayout(tradeablePanel);
         tradeablePanel.setLayout(tablePanel);
@@ -382,9 +429,12 @@ public class JFrameMarket extends JFrame {
                                         .addComponent(buyBut))
                                 .addContainerGap())
         );
-        tablePanel.linkSize(javax.swing.SwingConstants.VERTICAL, new Component[] {buyBut, tradableInfo});
 
         panel.add(tradeablePanel);
+        tradeablePanel.remove(tradableInfo);
+        tradeablePanel.remove(buyBut);
+
+        tradableInfo.setText("");
     }
 
 

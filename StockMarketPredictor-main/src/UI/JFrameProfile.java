@@ -3,6 +3,8 @@ package UI;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class JFrameProfile extends JFrame {
@@ -17,9 +19,20 @@ public class JFrameProfile extends JFrame {
         setContentPane(panel1);
         setTitle("Bazzar");
         setSize(1580,820);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);;
         setVisible(true);
-
+        String[] moneyType= new String[]{"USD", "EUR", "CHF", "JPY", "GBP"};
+        for(int i = 0 ; i < moneyType.length;i++) {
+            JLabel label= new JLabel(moneyType[i]);
+            comboBox1.addItem(label.getText());
+        }
+        marketButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                new JFrameMarket().setVisible(true);
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -71,7 +84,6 @@ public class JFrameProfile extends JFrame {
         label2.setForeground(new Color(-19953));
         label2.setText("My amount of money in");
         panel5.add(label2, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        comboBox1 = new JComboBox();
         panel5.add(comboBox1, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
         label3.setText("");

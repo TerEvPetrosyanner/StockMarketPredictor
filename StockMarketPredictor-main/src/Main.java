@@ -6,5 +6,6 @@ public class Main {
 
        JFrameMarket a = new JFrameMarket();
        a.setVisible(true);
+
     }
 }

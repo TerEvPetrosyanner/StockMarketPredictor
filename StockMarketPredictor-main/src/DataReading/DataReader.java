@@ -12,15 +12,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DataReader {
-    private static final String tradablesPath = "./data/tradables.txt";
-    private static final String eventsPath = "./data/events.txt";
-    private static final String usersPath = "./data/users.txt";
+    public static final String tradablesPath = "./data/tradables.txt";
+    public static final String eventsPath = "./data/events.txt";
+    public static final String usersPath = "./data/users.txt";
+
+   public static final ArrayList<Tradable> result = new ArrayList<>();
 
     public static ArrayList<Tradable> getTradables() throws FileNotFoundException {
         Scanner scanner = new Scanner(new FileInputStream(tradablesPath));
         String currentLine;
-        ArrayList<Tradable> result = new ArrayList<>();
-        if(scanner.hasNextLine()){
+        while (scanner.hasNextLine()){
             currentLine = scanner.nextLine();
             switch (currentLine.split(" | ")[0]) {
                 case "Crypto":
@@ -42,6 +43,14 @@ public class DataReader {
         }
         return result;
     }
+public  static void main(String[] args) throws FileNotFoundException {
+        getTradables();
+        for(int i = 0; i<result.size();i++)
+        {
+            System.out.println(result.get(i).getType());
+
+        }
+}
 
     public static void addTradable(Tradable tradable) throws FileNotFoundException {
         PrintWriter writer = new PrintWriter(new File(tradablesPath));

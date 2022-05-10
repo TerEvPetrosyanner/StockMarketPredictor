@@ -27,7 +27,7 @@ public class Good extends Tradable {
         this();
         String[] parts = representation.split(" | ");
         if(parts.length != 5) return;
-        if(!parts[0].equals("Money")) return;
+        if(!parts[0].equals("Good")) return;
 
         this.goodName = parts[1];
         this.valueInMoney = new Money(new BigDecimal(parts[2]), "USD");
