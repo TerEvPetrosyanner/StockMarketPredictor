@@ -1,5 +1,6 @@
 package DataReading;
 
+import Market.Market;
 import Tradable.Tradable;
 import Tradable.Crypto;
 import Tradable.Money;
@@ -13,11 +14,11 @@ import java.util.Scanner;
 
 public class DataReader {
     public static final String tradablesPath = "./data/tradables.txt";
-    public static final String eventsPath = "./data/events.txt";
-    public static final String usersPath = "./data/users.txt";
-    private static int count = 1;
+    public static final String transactionsPath = "./data/transactions.txt";
+    private static int count = 0;
 
-   public static final ArrayList<Tradable> result = new ArrayList<>();
+    public static final ArrayList<Tradable> result = new ArrayList<>();
+    public static final ArrayList<Market.Transaction> history = new ArrayList<>();
 
     public static ArrayList<Tradable> getTradables() {
         Scanner scanner = null;
@@ -29,6 +30,7 @@ public class DataReader {
             System.exit(0);
         }
         String currentLine;
+        //Change to count, so like the first entries for getTradables then for seperate
         while (scanner.hasNextLine()){
             currentLine = scanner.nextLine();
             switch (currentLine.split(" | ")[0]) {
@@ -49,7 +51,23 @@ public class DataReader {
                     break;
             }
         }
+        scanner.close();
         return result;
+    }
+    public static ArrayList<Market.Transaction> getHistory() {
+        Scanner sc = null;
+        try {
+            sc = new Scanner(new FileInputStream(transactionsPath));
+        } catch (FileNotFoundException e) {
+            System.out.println("Cannot open the database file.");
+            System.exit(0);
+        }
+
+        while (sc.hasNextLine()) {
+            history.add(new Market.Transaction(sc.nextLine()));
+        }
+        sc.close();
+        return history;
     }
 
     public static void addTradable(Tradable tradable) throws FileNotFoundException {

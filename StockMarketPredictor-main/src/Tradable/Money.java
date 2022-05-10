@@ -81,6 +81,7 @@ public class Money extends Tradable {
         this.amount = m.getAmount();
         this.currency = m.getCurrency();
     }
+
     public Money(String representation){
         this();
         String[] parts = representation.split(" | ");
@@ -113,5 +114,9 @@ public class Money extends Tradable {
 
     public String toString() {
         return "Money | " + this.currency + " | " + this.amount;
+    }
+
+    public String getName(){
+        return this.currency;
     }
 }

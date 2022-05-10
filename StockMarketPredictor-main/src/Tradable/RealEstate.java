@@ -57,9 +57,14 @@ public class RealEstate extends Tradable{
 
     public void setValueInMoney(double Price){this.valueInMoney = valueInMoney;}
 
-
+    public String getName(){ return this.address; }
     public String toString() {
         return  "RealEstate | " + this.address + " | " + this.area + " | " + this.valueInMoney;
     }
 
+    public RealEstate clone(){
+        RealEstate r = (RealEstate) super.clone();
+        r.valueInMoney = new Money(valueInMoney.getAmount(), valueInMoney.getCurrency());
+        return r;
+    }
 }

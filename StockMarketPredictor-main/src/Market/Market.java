@@ -1,20 +1,20 @@
 
-        package Market;
+package Market;
 
-        import Owner.Owner;
-        import Tradable.Tradable;
-        import Tradable.CustomSlowMap;
+import Owner.Owner;
+import Tradable.Tradable;
+import Tradable.CustomSlowMap;
 
-        import java.io.FileInputStream;
-        import java.io.FileNotFoundException;
-        import java.io.FileOutputStream;
-        import java.io.PrintWriter;
-        import java.math.BigDecimal;
-        import java.util.ArrayList;
-        import java.util.Scanner;
-        import DataReading.DataReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Scanner;
+import DataReading.DataReader;
 
-        public class Market {
+public class Market {
     public static class Event {
         private final String[] descriptions = new String[]{"Civil war", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial"};
         private final CustomSlowMap<Integer, BigDecimal> effect = new CustomSlowMap<>(new Integer[]{0,1,2,3,4,5},new BigDecimal[]{new BigDecimal(0.17) });
@@ -42,7 +42,8 @@
         private String tradableType;
         private int transactionNum;
         private int tradableID;
-        private boolean isIn;
+
+        //Might not need the getters
 
         public String getDate() {
             return this.date;
@@ -64,8 +65,9 @@
             return this.tradableID;
         }
 
+        //Change String representation
         public String toString() {
-            return this.transactionNum + " " + this.isIn + " " + this.date + " " + this.owner + " " + this.tradableType + " " + this.tradableID;
+            return this.transactionNum + " " + this.date + " " + this.owner + " " + this.tradableType + " " + this.tradableID;
         }
 
         public Transaction(String s) {
@@ -87,42 +89,29 @@
             this.tradableType = t.getType();
             this.tradableID = id;
         }
-
-        //Some search stuff for Transactions?
     }
 
     private static ArrayList<Tradable> assets;
     private ArrayList<Transaction> history;
-    private Event currentEvent;
-    public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP}
+    public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP} //Why is it here not in Money?
 
     public Market(){
         assets = DataReader.getTradables();
-        //history = create transaction txt
-        currentEvent = null;
-    }
-
-    public void loadHistory() {
-        try {
-            Scanner sc = new Scanner(new FileInputStream("history.txt"));
-            while (sc.hasNextLine()) {
-                history.add(new Transaction(sc.nextLine()));
-            }
-            sc.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Cannot open the database file.");
-            System.exit(0);
-        }
+        history = DataReader.getHistory();
     }
 
     public ArrayList<Tradable> getAssets(){
-        return this.assets;
+        ArrayList<Tradable> res = new ArrayList<>(assets.size());
+        for(int i = 0; i< assets.size(); i++){
+            res.add((Tradable) assets.get(i).clone());
+        }
+        return res;
     }
 
     public static Tradable findTradableByID(int id){
         for(int i = 0; i<assets.size(); i++){
             if(assets.get(i).getMyID() == id) {
-                return assets.get(i); //Copy Constructor?
+                return (Tradable) assets.get(i).clone();
             }
         }
         return null;
@@ -132,7 +121,7 @@
         //The operation of Owner change
         Transaction t = new Transaction(owner, tradableId, date);
         try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("logs.txt", true));
+            PrintWriter pw = new PrintWriter(new FileOutputStream(DataReader.transactionsPath, true));
             pw.println(t);
             pw.close();
         } catch (FileNotFoundException e) {
@@ -141,9 +130,17 @@
         }
     }
 
+    public ArrayList<Tradable> search(String s){
+        ArrayList<Tradable> res = new ArrayList<Tradable>();
+        for (Tradable asset : assets) {
+            if (asset.toString().contains(s.toLowerCase())) {
+                res.add((Tradable) asset.clone());
+            }
+        }
+        return res;
+    }
+
     public void addAsset(Tradable t){
         assets.add(t);
     }
-
-    //Run here? Or seperate class??
 }
