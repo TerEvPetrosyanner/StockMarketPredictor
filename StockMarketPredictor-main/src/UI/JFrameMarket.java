@@ -2,14 +2,12 @@ package UI;
 
 import DataReading.DataReader;
 import Market.Market;
-import Owner.Owner;
 import Tradable.Tradable;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
@@ -18,6 +16,8 @@ public class JFrameMarket extends JFrame {
 
     Timer timer;
     int second;
+
+    public JPanel GlobalPanel = new JPanel();
     public JPanel EstatePanel = new JPanel();
     public JPanel CryptoPanel = new JPanel();
     public JPanel GoodPanel = new JPanel();
@@ -56,7 +56,6 @@ public class JFrameMarket extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField1.setToolTipText("Input");
         setSize(1600,820);
 
 
@@ -130,11 +129,21 @@ public class JFrameMarket extends JFrame {
         innerEstatePanel.setViewportView(EstatePanel);
         EstatePanel.setBackground(backgroundColor);
         EstatePanel.setLayout(rtradableLayout);
+        //Global Search
+        BoxLayout globalLayout = new BoxLayout(GlobalPanel, BoxLayout.Y_AXIS);
+        JScrollPane innerGlobalPanel = new JScrollPane();
+        jTabbedPane1.add(innerGlobalPanel);
+
+        innerGlobalPanel.setViewportView(GlobalPanel);
+        GlobalPanel.setBackground(backgroundColor);
+        GlobalPanel.setLayout(globalLayout);
 
         jTabbedPane1.addTab("Stock", innerStockPanel);
         jTabbedPane1.addTab("Crypto", innerCryptoPanel);
         jTabbedPane1.addTab("Good", innerGoodPanel);
         jTabbedPane1.addTab("Real Estate", innerEstatePanel);
+        jTabbedPane1.addTab("Global", innerGlobalPanel);
+
         jTabbedPane1.addTab("Transactions", new JLabel("Transactions"));
         jTabbedPane1.setBackground(backgroundColor);
         jTabbedPane1.setForeground(itemColor);
@@ -163,8 +172,12 @@ public class JFrameMarket extends JFrame {
 
         searchButton.setText("profilePic" +
                 "");
+
+
         searchButton.setPreferredSize(new java.awt.Dimension(75, 24));
         searchButton.addActionListener(this::searchButtonActionPerformed);
+
+
 
         second = 0;
         timeFlow();
@@ -172,6 +185,7 @@ public class JFrameMarket extends JFrame {
 
         GroupLayout toolBarLayout = new GroupLayout(toolBar);
         toolBar.setLayout(toolBarLayout);
+
 
 
         toolBarLayout.setHorizontalGroup(
@@ -207,32 +221,32 @@ public class JFrameMarket extends JFrame {
 
 
 
-//        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
-//        jPanel2.setLayout(jPanel2Layout);
-//        jPanel2Layout.setHorizontalGroup(
-//                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                        .addGroup(jPanel2Layout.createSequentialGroup()
-//                                .addContainerGap(50, Short.MAX_VALUE)
-//                                .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-//                                .addContainerGap(50, Short.MAX_VALUE))
-//                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-//                                        .addContainerGap()
-//                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-//                                        .addContainerGap()))
-//        );
-//        jPanel2Layout.setVerticalGroup(
-//                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                        .addGroup(jPanel2Layout.createSequentialGroup()
-//                                .addContainerGap()
-//                  `              .addComponent(jLabel3)
-//                                .addContainerGap(0, Short.MAX_VALUE))
-//                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-//                                        .addContainerGap(0, Short.MAX_VALUE)
-//                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
-//                                        .addContainerGap(36, Short.MAX_VALUE)))
-//        );
+        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap(50, Short.MAX_VALUE)
+                                .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                                .addContainerGap(50, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap()))
+        );
+        jPanel2Layout.setVerticalGroup(
+                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                   .addComponent(jLabel3)
+                                .addContainerGap(0, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addContainerGap(0, Short.MAX_VALUE)
+                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(36, Short.MAX_VALUE)))
+        );
 
 
 
@@ -271,8 +285,7 @@ public class JFrameMarket extends JFrame {
 
 
     private void searchButtonActionPerformed(ActionEvent evt) {
-        //search functionality
-
+        searchTradeableObject(GlobalPanel);
     }
 
     private void profilePicActionPerformed(ActionEvent evt) {
@@ -332,7 +345,7 @@ public class JFrameMarket extends JFrame {
     public void constructTradeableObject(){
         ArrayList<Tradable> tradables = market.getAssets();
         for (int i = 0; i < tradables.size(); i++) {
-            String labelText=tradables.get(i).getType()+ " |" + "Text should be input | in here | but I can't make it ";
+            String labelText=tradables.get(i).toString();
             tradableInfo.setText(labelText);
             switch (tradables.get(i).getType()) {
                 case "Stock":
@@ -355,7 +368,43 @@ public class JFrameMarket extends JFrame {
 
         }
     }
+    public  void searchTradeableObject(JPanel panel)
+    {
+        Market a = new Market();
 
+        JPanel otherPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        String text= jTextField1.getText();
+        a.search(text);
+
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weighty = 1.0;
+
+        otherPanel.setBorder(BorderFactory.createLineBorder(backgroundColor,1));
+        otherPanel.setBackground(backgroundColor);
+        for(int i = 0; i< a.res.size();i++)
+        {
+            JPanel tempPanel = new JPanel(){
+                @Override
+                public Dimension getPreferredSize()
+                {
+                    return new Dimension(1350,45);
+                }
+            };
+            tempPanel.setLayout(new FlowLayout());
+            JLabel text1 = new JLabel(a.res.get(i).toString());
+            text1.setForeground(itemColor);
+            tempPanel.add(text1);
+            JButton buyBut = new JButton("BUY");
+            tempPanel.add(buyBut);
+            tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
+            tempPanel.setBackground(backgroundColor);
+
+            otherPanel.add(tempPanel, gbc);
+        }
+        panel.add(otherPanel);
+
+    }
 
 
     public void addTradeableObject(JPanel panel, String text) {
@@ -369,12 +418,21 @@ public class JFrameMarket extends JFrame {
 
         for(int i = 0;i<tradables.size();i++)
         {
-            JPanel tempPanel = new JPanel();
+            JPanel tempPanel = new JPanel(){
+                @Override
+                public Dimension getPreferredSize()
+                {
+                    return new Dimension(1200,45);
+                }
+            };
+
             tempPanel.setLayout(new FlowLayout());
             JLabel text1 = new JLabel(text);
             text1.setForeground(itemColor);
+
             tempPanel.add(text1);
             JButton buyBut = new JButton("BUY");
+
             tempPanel.add(buyBut);
             tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
             tempPanel.setBackground(backgroundColor);

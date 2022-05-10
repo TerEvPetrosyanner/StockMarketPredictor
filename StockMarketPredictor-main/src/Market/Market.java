@@ -129,11 +129,11 @@ public class Market {
             System.exit(0);
         }
     }
+   public ArrayList<Tradable> res = new ArrayList<Tradable>();
 
     public ArrayList<Tradable> search(String s){
-        ArrayList<Tradable> res = new ArrayList<Tradable>();
         for (Tradable asset : assets) {
-            if (asset.toString().contains(s.toLowerCase())) {
+            if (asset.toString().toLowerCase().contains(s.toLowerCase())) {
                 res.add((Tradable) asset.clone());
             }
         }
