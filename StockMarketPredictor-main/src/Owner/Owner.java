@@ -4,13 +4,14 @@ import Tradable.CustomSlowMap;
 import Tradable.Tradable;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
 
 public class Owner{
     private String name;
-    private Tradable[] assets;
+    private ArrayList<Tradable> assets;
     private BigDecimal netWorth;
     private UUID uuid;
     private CustomSlowMap<String, BigDecimal> wallet;
@@ -19,10 +20,10 @@ public class Owner{
     public Owner(){
         this("John Doe", null, new BigDecimal(10000));
     }
-    public Owner(String name, Tradable[] assets, BigDecimal netWorth){
+    public Owner(String name, ArrayList<Tradable> assets, BigDecimal netWorth){
         this.name = name;
         if(assets != null) {
-            this.assets = Arrays.copyOf(assets, assets.length);
+            this.assets = new ArrayList<Tradable>(assets);
         }
         this.netWorth = netWorth;
         this.uuid = UUID.randomUUID();
@@ -47,6 +48,34 @@ public class Owner{
         return res;
     }
 
+    public boolean addNetWorth(BigDecimal addition){
+        if(netWorth.add(addition).signum() == 1){
+            netWorth = netWorth.add(addition);
+            return true;
+        }
+        return false;
+    }
+    public boolean removeTradableById(int id){
+        for(int i = 0; i<assets.size(); i++){
+            if(assets.get(i).getMyID() == id) {
+                assets.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+    public Tradable findTradableByID(int id){
+        for(int i = 0; i<assets.size(); i++){
+            if(assets.get(i).getMyID() == id) {
+                return (Tradable) assets.get(i).clone();
+            }
+        }
+        return null;
+    }
+
+    public void addAsset(Tradable newAsset){
+        assets.add(newAsset);
+    }
     public String getName(){
         return this.name;
     }

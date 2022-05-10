@@ -30,6 +30,7 @@ public abstract class Tradable implements Cloneable {
 
     public Tradable(UUID id, UUID[] history){
         this.ownerId = id;
+        myID = ++lastId;
         if(history != null){
             this.history = Arrays.copyOf(history, history.length);
         }

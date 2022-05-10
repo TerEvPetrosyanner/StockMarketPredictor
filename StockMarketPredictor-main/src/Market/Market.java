@@ -1,17 +1,14 @@
 
 package Market;
 
+import Exceptions.FailedTransactionException;
 import Owner.Owner;
 import Tradable.Tradable;
 import Tradable.CustomSlowMap;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 import DataReading.DataReader;
 
 public class Market {
@@ -42,6 +39,7 @@ public class Market {
         private String tradableType;
         private int transactionNum;
         private int tradableID;
+        private TransactionType transactionType;
 
         //Might not need the getters
 
@@ -65,34 +63,58 @@ public class Market {
             return this.tradableID;
         }
 
+
+
+        public enum TransactionType {BUY, SELL}
+
         //Change String representation
         public String toString() {
-            return this.transactionNum + " " + this.date + " " + this.owner + " " + this.tradableType + " " + this.tradableID;
+            return this.transactionNum + "|" + this.date + "|" + this.owner + "|" + this.tradableType + "|" + this.tradableID + "|" + this.transactionType;
         }
 
         public Transaction(String s) {
-            String[] arr = s.split(" ");
+            String[] arr = s.split("\\|");
             this.transactionNum = Integer.parseInt(arr[0]);
             this.date = arr[1];
-            this.owner = arr[2] + " " + arr[3];
-            this.tradableType = arr[4];
-            this.tradableID = Integer.parseInt(arr[5]);
+            this.owner = arr[2];
+            this.tradableType = arr[3];
+            this.tradableID = Integer.parseInt(arr[4]);
+            this.transactionType = arr[5].equals("BUY") ? TransactionType.BUY : TransactionType.SELL;
             //Exception?
 
         }
 
-        public Transaction(Owner o, int id, String date){
+        public Transaction(Owner o, int id, String date, TransactionType transactionType){
             Tradable t = findTradableByID(id);
             this.transactionNum = assets.size() + 1;
             this.date = date; //Need to get date from simulation
             this.owner = o.getName();
             this.tradableType = t.getType();
             this.tradableID = id;
+            this.transactionType = transactionType;
+        }
+
+        public boolean processTransaction(){
+            if(transactionType == TransactionType.SELL){
+                Tradable t = ownerProfile.findTradableByID(tradableID);
+                if(t == null) return false; // Exception?
+                assets.add((Tradable) t.clone());
+                ownerProfile.addNetWorth(t.getValueInMoney());
+                ownerProfile.removeTradableById(tradableID);
+            } else {
+                Tradable t = findTradableByID(tradableID);
+                if(t == null) return false;
+                if(!ownerProfile.addNetWorth(t.getValueInMoney().negate())) return false;
+                ownerProfile.addAsset((Tradable) t.clone());
+                removeTradableById(tradableID);
+            }
+            return true;
         }
     }
 
     private static ArrayList<Tradable> assets;
     private ArrayList<Transaction> history;
+    private static Owner ownerProfile = new Owner();
     public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP} //Why is it here not in Money?
 
     public Market(){
@@ -116,11 +138,34 @@ public class Market {
         }
         return null;
     }
-
-    public void sell(Owner owner, int tradableId, String date){
+    public static boolean removeTradableById(int id){
+        for(int i = 0; i<assets.size(); i++){
+            if(assets.get(i).getMyID() == id) {
+                assets.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+    public void sell(Owner owner, int tradableId, String date) throws FailedTransactionException {
         //The operation of Owner change
-        Transaction t = new Transaction(owner, tradableId, date);
+        Transaction t = new Transaction(owner, tradableId, date, Transaction.TransactionType.SELL);
         DataReader.addTransaction(t);
+        if(t.processTransaction()){
+            System.out.println("Transaction approved: " + t.toString());
+        } else {
+            throw new FailedTransactionException("Transaction failed: " + t);
+        }
+    }
+    public void buy(Owner owner, int tradableId, String date) throws FailedTransactionException {
+        //The operation of Owner change
+        Transaction t = new Transaction(owner, tradableId, date, Transaction.TransactionType.BUY);
+        DataReader.addTransaction(t);
+        if(t.processTransaction()){
+            System.out.println("Transaction approved: " + t.toString());
+        } else {
+            throw new FailedTransactionException("Transaction failed: " + t);
+        }
     }
 
    public ArrayList<Tradable> res = new ArrayList<Tradable>();
