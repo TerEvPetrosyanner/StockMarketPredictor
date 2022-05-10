@@ -1,11 +1,12 @@
 package Tradable;
 
+import Owner.Owner;
+
 import java.math.BigDecimal;
 
 public class Crypto extends Money {
     //Maybe separate classes for fungible and non-fungible
     //Non-fungible has to be immutable, while fungible mutable
-
     private BigDecimal amount;
     public static final TradableType type = TradableType.Crypto;
 

@@ -2,26 +2,24 @@ package UI;
 
 import DataReading.DataReader;
 import Market.Market;
+import Owner.Owner;
 import Tradable.Tradable;
-import Tradable.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
-public class JFrameMarket extends JFrame {
 
+public class JFrameMarket extends JFrame {
 
     Timer timer;
     int second;
     public JPanel EstatePanel = new JPanel();
     public JPanel CryptoPanel = new JPanel();
-    public JPanel CurrencyPanel = new JPanel();
     public JPanel GoodPanel = new JPanel();
     public Color backgroundColor = new Color(13, 19, 23);
     public Color itemColor = new Color(255, 178, 15);
@@ -59,7 +57,7 @@ public class JFrameMarket extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         jTextField1.setToolTipText("Input");
-
+        setSize(1600,820);
 
 
 
@@ -160,8 +158,6 @@ public class JFrameMarket extends JFrame {
         jLabel1.setText("Balance");
         jLabel1.setFont(new Font("Arial", Font.BOLD, 14));
 
-
-        jLabel2.setText("23");
         jLabel1.setFont(new Font("Arial", Font.BOLD, 14));
 
 
@@ -211,32 +207,34 @@ public class JFrameMarket extends JFrame {
 
 
 
-        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap(50, Short.MAX_VALUE)
-                                .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                                .addContainerGap(50, Short.MAX_VALUE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap()))
-        );
-        jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3)
-                                .addContainerGap(0, Short.MAX_VALUE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addContainerGap(0, Short.MAX_VALUE)
-                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(36, Short.MAX_VALUE)))
-        );
+//        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
+//        jPanel2.setLayout(jPanel2Layout);
+//        jPanel2Layout.setHorizontalGroup(
+//                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGroup(jPanel2Layout.createSequentialGroup()
+//                                .addContainerGap(50, Short.MAX_VALUE)
+//                                .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+//                                .addContainerGap(50, Short.MAX_VALUE))
+//                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+//                                        .addContainerGap()
+//                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+//                                        .addContainerGap()))
+//        );
+//        jPanel2Layout.setVerticalGroup(
+//                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGroup(jPanel2Layout.createSequentialGroup()
+//                                .addContainerGap()
+//                  `              .addComponent(jLabel3)
+//                                .addContainerGap(0, Short.MAX_VALUE))
+//                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+//                                        .addContainerGap(0, Short.MAX_VALUE)
+//                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
+//                                        .addContainerGap(36, Short.MAX_VALUE)))
+//        );
+
+
 
         jTabbedPane1.setToolTipText("");
 
@@ -278,7 +276,6 @@ public class JFrameMarket extends JFrame {
     }
 
     private void profilePicActionPerformed(ActionEvent evt) {
-        dispose();
         new JFrameProfile();
     }
 
@@ -326,6 +323,11 @@ public class JFrameMarket extends JFrame {
 
 
    public JLabel tradableInfo = new JLabel("");
+    public void constructNews(String text)
+    {
+
+    }
+
 
     public void constructTradeableObject(){
         ArrayList<Tradable> tradables = market.getAssets();

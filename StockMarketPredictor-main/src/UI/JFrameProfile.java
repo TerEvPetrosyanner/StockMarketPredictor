@@ -18,7 +18,7 @@ public class JFrameProfile extends JFrame {
     public JFrameProfile() {
         setContentPane(panel1);
         setTitle("Bazzar");
-        setSize(1580,820);
+        setSize(1600,820);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);;
         setVisible(true);
         String[] moneyType= new String[]{"USD", "EUR", "CHF", "JPY", "GBP"};
