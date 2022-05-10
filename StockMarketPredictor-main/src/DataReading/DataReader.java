@@ -1,6 +1,7 @@
 package DataReading;
 
 import Market.Market;
+import Market.Market.Transaction;
 import Tradable.Tradable;
 import Tradable.Crypto;
 import Tradable.Money;
@@ -13,11 +14,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DataReader {
-    public static final String tradablesPath = "./data/tradables.txt";
-    public static final String transactionsPath = "./data/transactions.txt";
-    private static int count = 0;
+    private static final String tradablesPath = "./data/tradables.txt";
+    private static final String transactionsPath = "./data/transactions.txt";
+    public static int count = 0;
 
-    public static final ArrayList<Tradable> result = new ArrayList<>();
+    private static final ArrayList<Tradable> result = new ArrayList<>();
     public static final ArrayList<Market.Transaction> history = new ArrayList<>();
 
     public static ArrayList<Tradable> getTradables() {
@@ -52,7 +53,7 @@ public class DataReader {
             }
         }
         scanner.close();
-        return result;
+        return new ArrayList<>(result);
     }
     public static ArrayList<Market.Transaction> getHistory() {
         Scanner sc = null;
@@ -70,13 +71,26 @@ public class DataReader {
         return history;
     }
 
-    public static void addTradable(Tradable tradable) throws FileNotFoundException {
-        PrintWriter writer = new PrintWriter(new File(tradablesPath));
-
-        writer.print(tradable.toString());
-        writer.close();
+    public static void addTradable(Tradable tradable) {
+        try {
+            PrintWriter pw = new PrintWriter(new FileOutputStream(DataReader.tradablesPath, true));
+            pw.println(tradable);
+            pw.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Cannot save into the database file.");
+            System.exit(0);
+        }
     }
-
+    public static void addTransaction(Transaction transaction){
+        try {
+            PrintWriter pw = new PrintWriter(new FileOutputStream(DataReader.transactionsPath, true));
+            pw.println(transaction);
+            pw.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Cannot save into the database file.");
+            System.exit(0);
+        }
+    }
     public static Tradable getTradable(){
         if(count<result.size()) return result.get(count++);
         return null;

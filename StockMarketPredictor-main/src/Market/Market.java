@@ -120,15 +120,9 @@ public class Market {
     public void sell(Owner owner, int tradableId, String date){
         //The operation of Owner change
         Transaction t = new Transaction(owner, tradableId, date);
-        try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream(DataReader.transactionsPath, true));
-            pw.println(t);
-            pw.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Cannot save into the database file.");
-            System.exit(0);
-        }
+        DataReader.addTransaction(t);
     }
+
    public ArrayList<Tradable> res = new ArrayList<Tradable>();
 
     public ArrayList<Tradable> search(String s){
