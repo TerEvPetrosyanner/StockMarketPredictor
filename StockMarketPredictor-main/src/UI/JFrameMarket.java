@@ -3,12 +3,14 @@ package UI;
 import DataReading.DataReader;
 import Market.Market;
 import Tradable.RealEstate;
+import Tradable.Tradable;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 
 public class JFrameMarket extends JFrame {
@@ -45,8 +47,12 @@ public class JFrameMarket extends JFrame {
 
     JTextArea newsArea = new JTextArea();
 
+    private Market market;
+
 
     public JFrameMarket() {
+        market = new Market();
+        constructTradeableObject();
         setTitle("Bazzar");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
@@ -320,22 +326,22 @@ public class JFrameMarket extends JFrame {
                                                 .addComponent(jTabbedPane1)))
                                 .addContainerGap())
         );
-        boolean alreadyExecuted=false;
-        if(!alreadyExecuted)
-        {
-            try{
-                constructTradeableObject();
-                alreadyExecuted=true;
-            }catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+//        boolean alreadyExecuted=false;
+//        if(!alreadyExecuted)
+//        {
+//            try{
+//                constructTradeableObject();
+//                alreadyExecuted=true;
+//            }catch (Exception e)
+//            {
+//                e.printStackTrace();
+//            }
+//
+//            pack();
 
-            pack();
 
 
-
-        }
+        //}
     }
 
 
@@ -349,16 +355,42 @@ public class JFrameMarket extends JFrame {
         new JFrameProfile();
     }
 
+    private int day = 1;
 
     public void timeFlow() {
-        timer = new Timer((int) (Math.random() * 10000), e -> {
-            Market.Event event = new Market.Event();
-            newsLine = event.getDescription();
-            JLabel temp = new JLabel(newsLine);
-            newsArea.setEditable(false);
-            newsArea.setFont(new Font("Arial", Font.BOLD, 17));
-            newsArea.append("\n" + temp.getText() + "\n");
-
+        timer = new Timer(2000, e -> {
+            day++;
+            if(day%2 == 0) {
+                Market.Event event = new Market.Event();
+                //event.affect();
+                newsLine = event.getDescription();
+                JLabel temp = new JLabel(newsLine);
+                newsArea.setEditable(false);
+                newsArea.setFont(new Font("Arial", Font.BOLD, 17));
+                newsArea.append("\n" + temp.getText() + "\n");
+            }
+            if(day%10 == 0) {
+                System.out.println("New");
+                Tradable t = DataReader.getTradable();
+                if (t != null) {
+                    market.addAsset(t);
+                    tradableInfo.setText(t.getType());
+                    switch (t.getType()) {
+                        case "Stock":
+                            addTradeableObject(StockPanel, t.getType());
+                            break;
+                        case "Crypto":
+                            addTradeableObject(CryptoPanel, t.getType());
+                            break;
+                        case "Good":
+                            addTradeableObject(GoodPanel, t.getType());
+                            break;
+                        case "RealEstate":
+                            addTradeableObject(EstatePanel, t.getType());
+                            break;
+                    }
+                }
+            }
         });
 
 
@@ -368,30 +400,27 @@ public class JFrameMarket extends JFrame {
 
    public JLabel tradableInfo = new JLabel("");
 
-    public void constructTradeableObject() throws FileNotFoundException {
-
-
-        DataReader.getTradables();
-        for (int i = 0; i < DataReader.result.size(); i++) {
-            switch (DataReader.result.get(i).getType()) {
+    public void constructTradeableObject(){
+        ArrayList<Tradable> tradables = market.getAssets();
+        for (int i = 0; i < tradables.size(); i++) {
+            tradableInfo.setText(tradables.get(i).getType());
+            switch (tradables.get(i).getType()) {
                 case "Stock":
-                    tradableInfo.setText(DataReader.result.get(i).getType());
                     addTradeableObject(StockPanel,tradableInfo.getText());
                     break;
+
                 case "Crypto":
-                    tradableInfo.setText(DataReader.result.get(i).getType());
                     addTradeableObject(CryptoPanel,tradableInfo.getText());
                     break;
+
                 case "Good":
-                    tradableInfo.setText(DataReader.result.get(i).getType());
                     addTradeableObject(GoodPanel,tradableInfo.getText());
                     break;
+
                 case "RealEstate":
-                    tradableInfo.setText(DataReader.result.get(i).getType());
                     addTradeableObject(EstatePanel,tradableInfo.getText());
                     break;
             }
-
 
         }
     }

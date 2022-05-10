@@ -12,8 +12,9 @@
         import java.math.BigDecimal;
         import java.util.ArrayList;
         import java.util.Scanner;
+        import DataReading.DataReader;
 
-public class Market {
+        public class Market {
     public static class Event {
         private final String[] descriptions = new String[]{"Civil war", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial"};
         private final CustomSlowMap<Integer, BigDecimal> effect = new CustomSlowMap<>(new Integer[]{0,1,2,3,4,5},new BigDecimal[]{new BigDecimal(0.17) });
@@ -28,7 +29,7 @@ public class Market {
             return descriptions[eventNum];
         }
 
-        private void affect() {
+        public void affect() {
             for (int i = 0; i < assets.size(); i++) {
                 assets.get(i).updatePrice(assets.get(i).getValueInMoney().multiply(effect.getValue(eventNum)));
             }
@@ -78,10 +79,10 @@ public class Market {
 
         }
 
-        public Transaction(Owner o, int id){
+        public Transaction(Owner o, int id, String date){
             Tradable t = findTradableByID(id);
             this.transactionNum = assets.size() + 1;
-            this.date = ""; //Need to get date from simulation
+            this.date = date; //Need to get date from simulation
             this.owner = o.getName();
             this.tradableType = t.getType();
             this.tradableID = id;
@@ -94,6 +95,12 @@ public class Market {
     private ArrayList<Transaction> history;
     private Event currentEvent;
     public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP}
+
+    public Market(){
+        assets = DataReader.getTradables();
+        //history = create transaction txt
+        currentEvent = null;
+    }
 
     public void loadHistory() {
         try {
@@ -108,11 +115,11 @@ public class Market {
         }
     }
 
-    private ArrayList<Tradable> getAssets(){
+    public ArrayList<Tradable> getAssets(){
         return this.assets;
     }
 
-    private static Tradable findTradableByID(int id){
+    public static Tradable findTradableByID(int id){
         for(int i = 0; i<assets.size(); i++){
             if(assets.get(i).getMyID() == id) {
                 return assets.get(i); //Copy Constructor?
@@ -121,9 +128,9 @@ public class Market {
         return null;
     }
 
-    public void sell(Owner owner, int tradableId){
+    public void sell(Owner owner, int tradableId, String date){
         //The operation of Owner change
-        Transaction t = new Transaction(owner, tradableId);
+        Transaction t = new Transaction(owner, tradableId, date);
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream("logs.txt", true));
             pw.println(t);

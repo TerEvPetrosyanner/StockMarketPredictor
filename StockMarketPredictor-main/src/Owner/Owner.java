@@ -1,4 +1,5 @@
 package Owner;
+import Market.Market;
 import Tradable.CustomSlowMap;
 import Tradable.Tradable;
 
@@ -37,7 +38,9 @@ public class Owner{
         BigDecimal res = netWorth;
         //Make event a separate class? Or how to make static
         for(int i = 0; i<year; i++){
-            if(i%3 == 0) { //some event happens
+            if(i%3 == 0) {
+                Market.Event event = new Market.Event();
+                event.affect();
             }
             res = res.add(res.multiply(BigDecimal.valueOf(5.0 / 100)));
         }
