@@ -4,7 +4,7 @@ import UI.JFrameProfile;
 public class Main {
     public static void main(String[] args) {
 
-                JFrameProfile a = new JFrameProfile();
-                    a.setVisible(true);
+       JFrameMarket a = new JFrameMarket();
+       a.setVisible(true);
     }
 }

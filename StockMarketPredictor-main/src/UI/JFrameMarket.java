@@ -36,28 +36,25 @@ public class JFrameMarket extends JFrame {
     Icon iconProfile;
     Icon iconSearch;
 
-    JScrollPane newsScroll = new JScrollPane();
 
     public String newsLine;
 
     JTextArea newsArea=new JTextArea();
-    JPanel newsPanel = new JPanel();
-    JPanel newsTextPanel = new JPanel();
 
 
     public JFrameMarket() {
         setTitle("Bazzar");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
         jTextField1.setToolTipText("Input");
 
 
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1600, 820));
+        setPreferredSize(new java.awt.Dimension(1580, 820));
 
 
         Container mainContainer = this.getContentPane();
         mainContainer.setBackground(backgroundColor);
+
         this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, backgroundColor));
         setLayout(new GridBagLayout());
 
@@ -385,7 +382,7 @@ public class JFrameMarket extends JFrame {
                                         .addComponent(buyBut))
                                 .addContainerGap())
         );
-        tablePanel.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {buyBut, tradableInfo});
+        tablePanel.linkSize(javax.swing.SwingConstants.VERTICAL, new Component[] {buyBut, tradableInfo});
 
         panel.add(tradeablePanel);
     }
