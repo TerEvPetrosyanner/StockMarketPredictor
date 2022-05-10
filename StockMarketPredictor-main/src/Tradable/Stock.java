@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class Stock extends Tradable{
     private Money valueInMoney;
     public static final TradableType type = TradableType.Stock;
+    private String name;
 
     public Stock (){
         valueInMoney = new Money(new BigDecimal(1), "USD");
@@ -15,7 +16,9 @@ public class Stock extends Tradable{
         if(parts.length != 2) return;
         if(!parts[0].equals("Stock")) return;
 
-        this.valueInMoney = new Money(new BigDecimal(parts[1]), "USD");
+        this.valueInMoney = new Money(new BigDecimal(parts[2]), "USD");
+        this.name = parts[1];
+
     }
     @Override
     public BigDecimal getValueInMoney() {
@@ -33,7 +36,9 @@ public class Stock extends Tradable{
     }
 
     public String toString () {
-        return "Money | " + this.valueInMoney;
+        return "Stock | " + this.name + " | " + this.valueInMoney;
     }
+
+    public String getName() {return this.name; }
 
 }

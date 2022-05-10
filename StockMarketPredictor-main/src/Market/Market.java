@@ -11,6 +11,7 @@
         import java.io.PrintWriter;
         import java.math.BigDecimal;
         import java.util.ArrayList;
+        import java.util.Locale;
         import java.util.Scanner;
         import DataReading.DataReader;
 
@@ -116,7 +117,11 @@
     }
 
     public ArrayList<Tradable> getAssets(){
-        return this.assets;
+        ArrayList<Tradable> res = new ArrayList<>(assets.size());
+        for(int i = 0; i< assets.size(); i++){
+            res.add((Tradable) assets.get(i).clone());
+        }
+        return res;
     }
 
     public static Tradable findTradableByID(int id){
@@ -139,6 +144,16 @@
             System.out.println("Cannot save into the database file.");
             System.exit(0);
         }
+    }
+
+    public ArrayList<Tradable> search(String s){
+        ArrayList<Tradable> res = new ArrayList<Tradable>();
+        for (Tradable asset : assets) {
+            if (asset.toString().contains(s.toLowerCase())) {
+                res.add((Tradable) asset.clone());
+            }
+        }
+        return res;
     }
 
     public void addAsset(Tradable t){

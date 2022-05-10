@@ -57,7 +57,9 @@ public class Good extends Tradable {
         return type.toString();
     }
 
+    public String getName() { return this.goodName; }
+
     public String toString() {
-        return "Money | " + this.goodName + " | " + this.valueInMoney + " | " + this.amount + " | " + this.unitType;
+        return "Good | " + this.goodName + " | " + this.valueInMoney + " | " + this.amount + " | " + this.unitType;
     }
 }

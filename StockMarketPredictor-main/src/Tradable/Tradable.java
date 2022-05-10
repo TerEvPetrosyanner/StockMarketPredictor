@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 
-public abstract class Tradable {
+public abstract class Tradable implements Cloneable {
     UUID ownerId;
     UUID[] history;
     //To keep track of Tradable ID's
@@ -53,11 +53,23 @@ public abstract class Tradable {
 
     }
 
+    public abstract String getName();
+
     public abstract BigDecimal getValueInMoney();
 
     public abstract void updatePrice(BigDecimal newValue);
 
     public abstract String getType();
+
+    public Object clone(){
+        try{
+            return super.clone();
+        }
+        catch(CloneNotSupportedException e){
+            return null;
+        }
+    }
+
 
     //public abstract int getID();
 
