@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class RealEstate extends Tradable{
 
     /**Instance variables */
-    private final String address;
+    private String address;
 
     //maybe need to add what currency is the price in?
 
@@ -13,7 +13,7 @@ public class RealEstate extends Tradable{
     private Money valueInMoney;
 
     //ft, m^2, km^2?
-    private final double area;
+    private double area;
 
     public static final TradableType type = TradableType.RealEstate;
     //anything more to be added?
@@ -23,6 +23,22 @@ public class RealEstate extends Tradable{
         this.address = address;
         this.valueInMoney = price;
         this.area = area;
+    }
+    public RealEstate(){
+        this.address = "Baker Str. 1";
+        this.valueInMoney = new Money(new BigDecimal("12"), "USD");
+        this.area = 1;
+    }
+
+    public RealEstate(String representation){
+        this();
+        String[] parts = representation.split(" | ");
+        if(parts.length != 4) return;
+        if(!parts[0].equals("RealEstate")) return;
+
+        this.address = parts[1];
+        this.area = Double.parseDouble(parts[2]);
+        this.valueInMoney = new Money(new BigDecimal(parts[3]), "USD");
     }
     public String getAddress(){return this.address;}
     public double getArea(){return this.area;}
@@ -42,8 +58,8 @@ public class RealEstate extends Tradable{
     public void setValueInMoney(double Price){this.valueInMoney = valueInMoney;}
 
 
-    //I think Money can become an abstract class as no object of it seems to be created
-
-
+    public String toString() {
+        return  "RealEstate | " + this.address + " | " + this.area + " | " + this.valueInMoney;
+    }
 
 }

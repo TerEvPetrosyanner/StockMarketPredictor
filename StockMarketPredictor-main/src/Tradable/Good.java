@@ -13,20 +13,32 @@ public class Good extends Tradable {
     private UnitType unitType;
     private Money valueInMoney;
     private String goodName;
-    private double amount;
+    private BigDecimal amount;
 
 
-    public Good(String goodName, BigDecimal money, UnitType type, double amount) {
+    public Good(String goodName, BigDecimal money, UnitType type, BigDecimal amount) {
         valueInMoney = new Money(money, "USD");
         this.goodName = goodName;
         this.amount = amount;
         unitType = type;
     }
 
+    public Good(String representation){
+        this();
+        String[] parts = representation.split(" | ");
+        if(parts.length != 5) return;
+        if(!parts[0].equals("Money")) return;
+
+        this.goodName = parts[1];
+        this.valueInMoney = new Money(new BigDecimal(parts[2]), "USD");
+        this.amount = new BigDecimal(parts[3]);
+        this.unitType = parts[4].equals("Kg") ? UnitType.Kg : UnitType.Piece;
+    }
+
     public Good() {
         this.goodName = "Banana";
         valueInMoney = new Money(new BigDecimal(2), "USD");
-        this.amount = 1;
+        this.amount = new BigDecimal(1);
         this.unitType = UnitType.Kg;
     }
 
@@ -43,5 +55,9 @@ public class Good extends Tradable {
     @Override
     public String getType() {
         return type.toString();
+    }
+
+    public String toString() {
+        return "Money | " + this.goodName + " | " + this.valueInMoney + " | " + this.amount + " | " + this.unitType;
     }
 }

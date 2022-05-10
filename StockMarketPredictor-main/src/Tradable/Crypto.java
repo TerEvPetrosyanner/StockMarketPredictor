@@ -6,7 +6,7 @@ public class Crypto extends Money {
     //Maybe separate classes for fungible and non-fungible
     //Non-fungible has to be immutable, while fungible mutable
 
-    private static BigDecimal amount;
+    private BigDecimal amount;
     public static final TradableType type = TradableType.Crypto;
 
     public enum CryptoCurrency {USDT, BTC, ETH, ADA, SOL;}
@@ -26,9 +26,22 @@ public class Crypto extends Money {
     }
 
 
+    public Crypto(String currency, BigDecimal amount){
+        this.currency = currency;
+        this.amount = new BigDecimal(amount.toString());
+    }
 
+    public Crypto(String representation){
+        this("BTC", new BigDecimal(0));
+        String[] parts = representation.split(" | ");
+        if(parts.length != 3) return;
+        if(!parts[0].equals("Crypto")) return;
+
+        this.currency = parts[1];
+        this.amount = new BigDecimal(parts[2]);
+    }
     public static BigDecimal liquidity(Crypto first, Crypto second, double percentage, int month) {
-        if (Crypto.changeCurrency(first.getCryptoCurrency(), amount, second.getCryptoCurrency(), BigDecimal.ZERO).equals(second.getAmount())) {
+        if (Crypto.changeCurrency(first.getCryptoCurrency(), first.getAmount(), second.getCryptoCurrency(), BigDecimal.ZERO).equals(second.getAmount())) {
 
             return first.getAmount().multiply(BigDecimal.valueOf(Math.pow(1 + percentage / 100, month / 12.0)));
 
@@ -41,4 +54,7 @@ public class Crypto extends Money {
         return type.toString();
     }
 
+    public String toString() {
+        return "Crypto | " + this.currency + " | " + this.amount;
+    }
 }

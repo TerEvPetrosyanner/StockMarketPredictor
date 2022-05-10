@@ -81,7 +81,16 @@ public class Money extends Tradable {
         this.amount = m.getAmount();
         this.currency = m.getCurrency();
     }
+    public Money(String representation){
+        this();
+        String[] parts = representation.split(" | ");
+        if(parts.length != 3) return;
+        if(!parts[0].equals("Money")) return;
 
+
+        this.currency = parts[1];
+        this.amount = new BigDecimal(parts[2]);
+    }
     public static BigDecimal changeCurrency(String initialCurrency, BigDecimal amount, String targetCurrency, BigDecimal marketPercentage) {
 
         return amount.multiply(currencyRates.getValue(initialCurrency))
@@ -100,5 +109,9 @@ public class Money extends Tradable {
         this.amount = amount.multiply((BigDecimal.valueOf(1).add(percentage.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP))).pow(year));
 
 //        this.amount = amount.multiply(BigDecimal.valueOf(Math.pow(1 + percentage/100, year)));
+    }
+
+    public String toString() {
+        return "Money | " + this.currency + " | " + this.amount;
     }
 }
