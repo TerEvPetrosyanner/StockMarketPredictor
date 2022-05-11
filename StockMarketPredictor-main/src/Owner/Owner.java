@@ -54,6 +54,9 @@ public class Owner{
         }
         return false;
     }
+    public BigDecimal getNetWorth(){
+        return netWorth;
+    }
     public boolean removeTradableById(int id){
         for(int i = 0; i<assets.size(); i++){
             if(assets.get(i).getMyID() == id) {

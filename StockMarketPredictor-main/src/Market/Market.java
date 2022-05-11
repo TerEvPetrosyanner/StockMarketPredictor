@@ -125,6 +125,10 @@ public class Market {
         history = DataReader.getHistory();
     }
 
+    public static Owner getOwnerProfile() {
+        return ownerProfile;
+    }
+
     public ArrayList<Tradable> getAssets(){
         ArrayList<Tradable> res = new ArrayList<>(assets.size());
         for(int i = 0; i< assets.size(); i++){

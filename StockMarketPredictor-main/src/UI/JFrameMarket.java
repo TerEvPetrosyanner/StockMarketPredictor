@@ -4,6 +4,7 @@ import DataReading.DataReader;
 import Market.Market;
 import Owner.Owner;
 import Tradable.Tradable;
+import jdk.nashorn.internal.objects.Global;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -57,6 +58,7 @@ public class JFrameMarket extends JFrame {
 
     public JFrameMarket() {
         market = new Market();
+        user = new Owner();
 
         constructTradeableObject();
         setTitle("Bazzar");
@@ -146,11 +148,21 @@ public class JFrameMarket extends JFrame {
         GlobalPanel.setBackground(backgroundColor);
         GlobalPanel.setLayout(globalLayout);
 
+        //Transactions
+//        BoxLayout gtradableLayout = new BoxLayout(GoodPanel, BoxLayout.Y_AXIS);
+//
+//        JScrollPane innerGoodPanel = new JScrollPane();
+//        jTabbedPane1.add(innerGoodPanel);
+//
+//        innerGoodPanel.setViewportView(GoodPanel);
+//        TransactionPanel.setBackground(backgroundColor);
+//        GoodPanel.setLayout(gtradableLayout);
+
         jTabbedPane1.addTab("Stock", innerStockPanel);
         jTabbedPane1.addTab("Crypto", innerCryptoPanel);
         jTabbedPane1.addTab("Good", innerGoodPanel);
         jTabbedPane1.addTab("Real Estate", innerEstatePanel);
-        jTabbedPane1.addTab("Global", innerGlobalPanel);
+        jTabbedPane1.addTab("Search", innerGlobalPanel);
 
         jTabbedPane1.addTab("Transactions", new JLabel("Transactions"));
         jTabbedPane1.setBackground(backgroundColor);
@@ -172,7 +184,7 @@ public class JFrameMarket extends JFrame {
         profilePic
                 .addActionListener(this::profilePicActionPerformed);
 
-        jLabel1.setText("Balance");
+        jLabel1.setText("Balance: " + Market.getOwnerProfile().getNetWorth());
         jLabel1.setFont(new Font("Arial", Font.BOLD, 14));
 
         jLabel1.setFont(new Font("Arial", Font.BOLD, 14));
@@ -289,6 +301,7 @@ public class JFrameMarket extends JFrame {
 
 
     private void searchButtonActionPerformed(ActionEvent evt) {
+        delete(GlobalPanel);
         searchTradeableObject(GlobalPanel);
     }
 
@@ -472,6 +485,7 @@ public class JFrameMarket extends JFrame {
             market.buy(ID,"DAY " + day);
             System.out.println("bought");
             update(panel);
+            jLabel1.setText("Balance: " + Market.getOwnerProfile().getNetWorth());
              }
         catch(Exception t){}
     }

@@ -9,5 +9,27 @@ RealEstate | Baghramyan st. | 130 m2 |  70000 USD
 RealEstate | Vagharsyan st. | 80 m2 | 40000 USD
 Good | Crude Oil | 1 barrel | 30 USD
 Good | Banana Oil | 10 kg | 20 USD
+Stock | AAPL | 152.47 USD
+Stock | GGl | 100.47 USD
+Stock | AWS | 90.29 USD
+Crypto | ETH | 2035.23 USD
+Crypto | BTC | 8125.13 USD
+Crypto | SOL | 67.89 USD
+RealEstate | Baker st. | 100 m2 | 50000 USD
+RealEstate | Baghramyan st. | 130 m2 |  70000 USD
+RealEstate | Vagharsyan st. | 80 m2 | 40000 USD
+Good | Crude Oil | 1 barrel | 30 USD
+Good | Banana Oil | 10 kg | 20 USD
+Stock | AAPL | 152.47 USD
+Stock | GGl | 100.47 USD
+Stock | AWS | 90.29 USD
+Crypto | ETH | 2035.23 USD
+Crypto | BTC | 8125.13 USD
+Crypto | SOL | 67.89 USD
+RealEstate | Baker st. | 100 m2 | 50000 USD
+RealEstate | Baghramyan st. | 130 m2 |  70000 USD
+RealEstate | Vagharsyan st. | 80 m2 | 40000 USD
+Good | Crude Oil | 1 barrel | 30 USD
+Good | Banana Oil | 10 kg | 20 USD
 
 
