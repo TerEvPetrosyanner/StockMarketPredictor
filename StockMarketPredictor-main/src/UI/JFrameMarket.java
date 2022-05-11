@@ -437,8 +437,7 @@ public class JFrameMarket extends JFrame {
         otherPanel.setBorder(BorderFactory.createLineBorder(backgroundColor,1));
         otherPanel.setBackground(backgroundColor);
 
-        for(int i = 0;i<tradables.size();i++)
-        {
+
             JPanel tempPanel = new JPanel(){
                 @Override
                 public Dimension getPreferredSize()
@@ -459,7 +458,7 @@ public class JFrameMarket extends JFrame {
             tempPanel.setBackground(backgroundColor);
 
             otherPanel.add(tempPanel, gbc);
-        }
+
         panel.add(otherPanel);
 
 
