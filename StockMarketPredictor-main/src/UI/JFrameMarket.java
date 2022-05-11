@@ -320,16 +320,16 @@ public class JFrameMarket extends JFrame {
                     tradableInfo.setText(t.getType());
                     switch (t.getType()) {
                         case "Stock":
-                            addTradeableObject(StockPanel, t.getType(),t.getMyID());
+                            addTradeableObject(StockPanel, t.toString(),t.getMyID());
                             break;
                         case "Crypto":
-                            addTradeableObject(CryptoPanel, t.getType(),t.getMyID());
+                            addTradeableObject(CryptoPanel, t.toString(),t.getMyID());
                             break;
                         case "Good":
-                            addTradeableObject(GoodPanel, t.getType(),t.getMyID());
+                            addTradeableObject(GoodPanel, t.toString(),t.getMyID());
                             break;
                         case "RealEstate":
-                            addTradeableObject(EstatePanel, t.getType(),t.getMyID());
+                            addTradeableObject(EstatePanel, t.toString(),t.getMyID());
                             break;
                     }
                 }
