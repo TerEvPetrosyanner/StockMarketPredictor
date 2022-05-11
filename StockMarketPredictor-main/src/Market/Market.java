@@ -101,21 +101,16 @@ public class Market {
                 if(t == null) return false; // Exception?
                 assets.add((Tradable) t.clone());
                 ownerProfile.addNetWorth(t.getValueInMoney());
-                ownerProfile.removeTradableById(tradableID);
+                return ownerProfile.removeTradableById(tradableID);
             } else {
                 Tradable t = findTradableByID(tradableID);
                 if(t == null) return false;
                 if(!ownerProfile.addNetWorth(t.getValueInMoney().negate())) return false;
 
                 ownerProfile.addAsset((Tradable) t.clone());
-                if(!removeTradableById(tradableID)) {
-                    System.out.println("false");
-                    return false;
-                }
-                System.out.println(this.toString());
+                return removeTradableById(tradableID);
 
             }
-            return true;
         }
     }
 
