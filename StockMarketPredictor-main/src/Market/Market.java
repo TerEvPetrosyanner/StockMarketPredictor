@@ -14,8 +14,9 @@ import DataReading.DataReader;
 
 public class Market {
     public static class Event {
-        private final String[] descriptions = new String[]{"Civil war", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial"};
-        private final CustomSlowMap<Integer, BigDecimal> effect = new CustomSlowMap<>(new Integer[]{0,1,2,3,4,5},new BigDecimal[]{new BigDecimal(0.89), new BigDecimal(0.95),new BigDecimal(0.77),new BigDecimal(0.91),new BigDecimal(0.87),new BigDecimal(0.90) });
+        private final String[] descriptions = new String[]{"Civil war", "Thanos snapped fingers", "Spider Man got lost in the multiverse","Johnny Depp lost trial", "Alduin awakened", "Dovahkin bought High Hrothgar","Queen of England died"};
+        private final CustomSlowMap<Integer, BigDecimal> effect = new CustomSlowMap<>(new Integer[]{0,1,2,3,4,5,6},
+                new BigDecimal[]{new BigDecimal(0.89), new BigDecimal(0.95),new BigDecimal(0.77),new BigDecimal(0.91),new BigDecimal(0.87),new BigDecimal(0.90), new BigDecimal(1.3) });
         private final int eventNum;
 
 

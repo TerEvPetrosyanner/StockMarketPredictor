@@ -58,7 +58,7 @@ public class Crypto extends Tradable {
 
     @Override
     public BigDecimal getValueInMoney() {
-        return null;
+        return valueInMoney.getValueInMoney();
     }
 
     @Override
