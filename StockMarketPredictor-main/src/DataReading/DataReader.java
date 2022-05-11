@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class DataReader {
     private static final String tradablesPath = "./data/tradables.txt";
     private static final String transactionsPath = "./data/transactions.txt";
-    public static int count = 0;
+    public static int count = 1;
 
     private static final ArrayList<Tradable> result = new ArrayList<>();
     public static final ArrayList<Market.Transaction> history = new ArrayList<>();
@@ -55,6 +55,7 @@ public class DataReader {
         scanner.close();
         return new ArrayList<>(result);
     }
+
     public static ArrayList<Market.Transaction> getHistory() {
         Scanner sc = null;
         try {

@@ -2,12 +2,14 @@ package UI;
 
 import DataReading.DataReader;
 import Market.Market;
+import Owner.Owner;
 import Tradable.Tradable;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
@@ -46,6 +48,11 @@ public class JFrameMarket extends JFrame {
     JTextArea newsArea = new JTextArea();
 
     private Market market;
+    private Owner user;
+
+    protected Owner getUser(){
+        return user;
+    }
 
 
     public JFrameMarket() {
@@ -288,8 +295,10 @@ public class JFrameMarket extends JFrame {
         searchTradeableObject(GlobalPanel);
     }
 
+    private JFrameProfile profile;
+
     private void profilePicActionPerformed(ActionEvent evt) {
-        new JFrameProfile();
+        profile = new JFrameProfile(user);
     }
 
     private int day = 1;
@@ -396,6 +405,17 @@ public class JFrameMarket extends JFrame {
             text1.setForeground(itemColor);
             tempPanel.add(text1);
             JButton buyBut = new JButton("BUY");
+            int finalI = i;
+            buyBut.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        market.buy(user, a.res.get(finalI).getMyID(), "DAY " + day);
+                    }
+                    catch(Exception t){}
+                }
+            });
+
             tempPanel.add(buyBut);
             tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
             tempPanel.setBackground(backgroundColor);
