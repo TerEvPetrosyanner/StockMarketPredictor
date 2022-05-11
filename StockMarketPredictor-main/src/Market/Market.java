@@ -106,7 +106,6 @@ public class Market {
                 Tradable t = findTradableByID(tradableID);
                 if(t == null) return false;
                 if(!ownerProfile.addNetWorth(t.getValueInMoney().negate())) return false;
-                System.err.println("test2");
 
                 ownerProfile.addAsset((Tradable) t.clone());
                 if(!removeTradableById(tradableID)) {
@@ -147,9 +146,7 @@ public class Market {
         return null;
     }
     public static boolean removeTradableById(int id){
-        System.err.println("do");
         for(int i = 0; i<assets.size(); i++){
-
             if(assets.get(i).getMyID() == id) {
                 System.out.println("removed");
                 assets.remove(i);
@@ -172,8 +169,6 @@ public class Market {
     public void buy(int tradableId, String date) throws FailedTransactionException {
         //The operation of Owner change
         Transaction t = new Transaction(ownerProfile, tradableId, date, Transaction.TransactionType.BUY);
-        System.out.println("AAA");
-        System.out.println(t.processTransaction());
         if(t.processTransaction()){
             System.out.println("Transaction approved: " + t.toString());
         } else {
