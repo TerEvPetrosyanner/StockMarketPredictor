@@ -81,6 +81,8 @@ public class Owner{
     public String getName(){
         return this.name;
     }
+    public ArrayList<Tradable> getAssets(){return this.assets;}
+
 
     public CustomSlowMap<String, BigDecimal> getWallet(){
         //Privacy leak

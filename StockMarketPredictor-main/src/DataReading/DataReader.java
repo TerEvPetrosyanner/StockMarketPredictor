@@ -47,7 +47,8 @@ public class DataReader {
                     result.add(new Stock(currentLine));
                     break;
                 case "Good":
-                    result.add(new Good(currentLine));
+
+                   result.add(new Good(currentLine));
                     break;
             }
         }

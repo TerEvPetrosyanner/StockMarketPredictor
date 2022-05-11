@@ -4,7 +4,6 @@ import DataReading.DataReader;
 import Market.Market;
 import Owner.Owner;
 import Tradable.Tradable;
-import jdk.nashorn.internal.objects.Global;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -49,16 +48,11 @@ public class JFrameMarket extends JFrame {
     JTextArea newsArea = new JTextArea();
 
     private Market market;
-    private Owner user;
 
-    protected Owner getUser(){
-        return user;
-    }
 
 
     public JFrameMarket() {
         market = new Market();
-        user = new Owner();
 
         constructTradeableObject();
         setTitle("Bazzar");
@@ -126,8 +120,9 @@ public class JFrameMarket extends JFrame {
 
         JScrollPane innerGoodPanel = new JScrollPane();
         jTabbedPane1.add(innerGoodPanel);
-
         innerGoodPanel.setViewportView(GoodPanel);
+
+
         GoodPanel.setBackground(backgroundColor);
         GoodPanel.setLayout(gtradableLayout);
 //Real Estate
@@ -308,7 +303,7 @@ public class JFrameMarket extends JFrame {
     private JFrameProfile profile;
 
     private void profilePicActionPerformed(ActionEvent evt) {
-        profile = new JFrameProfile(user);
+        profile = new JFrameProfile(Market.getOwnerProfile());
     }
 
     private int day = 1;
