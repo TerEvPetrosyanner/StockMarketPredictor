@@ -35,12 +35,12 @@ public class RealEstate extends Tradable{
     public RealEstate(String representation){
         this();
         String[] parts = representation.split(" \\| ");
-        if(parts.length != 4) return;
+        if(parts.length != 3) return;
         if(!parts[0].equals("RealEstate")) return;
 
         this.address = parts[1];
-        this.area = Double.parseDouble(parts[2]);
-        this.valueInMoney = new Money(new BigDecimal(parts[3]), "USD");
+        this.area = Double.parseDouble(parts[2].split(" ")[0]);
+        this.valueInMoney = new Money(new BigDecimal(parts[2].split(" ")[0]), parts[2].split(" ")[1]);
     }
     public String getAddress(){return this.address;}
     public double getArea(){return this.area;}
@@ -61,7 +61,7 @@ public class RealEstate extends Tradable{
 
     public String getName(){ return this.address; }
     public String toString() {
-        return  "RealEstate | " + this.address + " | " + this.area + " | " + this.valueInMoney;
+        return  "RealEstate | " + this.address + " | " + this.area + "m2 | " + this.valueInMoney.getValueInMoney() + " " + this.valueInMoney.getCurrency();
     }
 
     public RealEstate clone(){

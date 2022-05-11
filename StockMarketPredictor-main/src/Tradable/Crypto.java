@@ -40,7 +40,7 @@ public class Crypto extends Tradable {
         if(!parts[0].equals("Crypto")) return;
 
         this.currency = parts[1];
-        this.valueInMoney = new Money(parts[2]);
+        this.valueInMoney = new Money(this.valueInMoney = new Money(new BigDecimal(parts[2].split(" ")[0]), parts[2].split(" ")[1]));
     }
 //    public static BigDecimal liquidity(Crypto first, Crypto second, double percentage, int month) {
 //        if (Crypto.changeCurrency(first.getCryptoCurrency(), first.getAmount(), second.getCryptoCurrency(), BigDecimal.ZERO).equals(second.getAmount())) {

@@ -16,13 +16,10 @@ public class Stock extends Tradable{
     public Stock (String representation) {
         String[] parts = representation.split(" \\| ");
 
-        for(String part : parts){
-            System.out.println(part);
-        }
         if(parts.length != 3) return;
         if(!parts[0].equals("Stock")) return;
 
-        this.valueInMoney = new Money(new BigDecimal(parts[2].substring(1)), "USD");
+        this.valueInMoney = new Money(new BigDecimal(parts[2].split(" ")[0]), parts[2].split(" ")[1]);
         this.name = parts[1];
 
     }

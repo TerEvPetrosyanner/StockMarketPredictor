@@ -28,13 +28,12 @@ public class Good extends Tradable {
     public Good(String representation){
         this();
         String[] parts = representation.split(" \\| ");
-        if(parts.length != 7) return;
+        if(parts.length != 4) return;
         if(!parts[0].equals("Good")) return;
-
         this.goodName = parts[1];
-        this.valueInMoney = new Money(new BigDecimal(parts[2]), "USD");
-        this.amount = new BigDecimal(parts[3]);
-        this.unitType = parts[4].equals("Kg") ? UnitType.Kg : UnitType.Piece;
+        this.valueInMoney = new Money(new BigDecimal(parts[3].split(" ")[0]), parts[3].split(" ")[1]);
+        this.amount = new BigDecimal(parts[2].split(" ")[0]);
+        this.unitType = parts[2].split(" ")[1].equals("Kg") ? UnitType.Kg : UnitType.Piece;
     }
 
     public Good() {
@@ -62,6 +61,6 @@ public class Good extends Tradable {
     public String getName() { return this.goodName; }
 
     public String toString() {
-        return "Good | " + this.goodName + " | " + this.valueInMoney + " | " + this.amount + " | " + this.unitType;
+        return "Good | " + this.goodName + " | " + this.amount + " " + this.unitType + " | " + this.valueInMoney.getValueInMoney() + " " + this.valueInMoney.getCurrency();
     }
 }
