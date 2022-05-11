@@ -107,7 +107,7 @@ public class JFrameMarket extends JFrame {
         StockPanel.setBackground(backgroundColor);
         StockPanel.setLayout(tradableLayout);
 
- //crypto
+        //crypto
         BoxLayout ctradableLayout = new BoxLayout(CryptoPanel, BoxLayout.Y_AXIS);
 
         JScrollPane innerCryptoPanel = new JScrollPane();
@@ -132,7 +132,6 @@ public class JFrameMarket extends JFrame {
 
         JScrollPane innerEstatePanel = new JScrollPane();
         jTabbedPane1.add(innerEstatePanel);
-
         innerEstatePanel.setViewportView(EstatePanel);
         EstatePanel.setBackground(backgroundColor);
         EstatePanel.setLayout(rtradableLayout);
@@ -198,7 +197,6 @@ public class JFrameMarket extends JFrame {
         toolBarLayout.setHorizontalGroup(
                 toolBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(GroupLayout.Alignment.TRAILING, toolBarLayout.createSequentialGroup()
-
                                 .addContainerGap(100, Short.MAX_VALUE)
                                 .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
@@ -225,9 +223,6 @@ public class JFrameMarket extends JFrame {
                                                 .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
         );
-
-
-
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -246,7 +241,7 @@ public class JFrameMarket extends JFrame {
                 jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                   .addComponent(jLabel3)
+                                .addComponent(jLabel3)
                                 .addContainerGap(0, Short.MAX_VALUE))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -323,16 +318,16 @@ public class JFrameMarket extends JFrame {
                     tradableInfo.setText(t.getType());
                     switch (t.getType()) {
                         case "Stock":
-                            addTradeableObject(StockPanel, t.getType());
+                            addTradeableObject(StockPanel, t.getType(),t.getMyID());
                             break;
                         case "Crypto":
-                            addTradeableObject(CryptoPanel, t.getType());
+                            addTradeableObject(CryptoPanel, t.getType(),t.getMyID());
                             break;
                         case "Good":
-                            addTradeableObject(GoodPanel, t.getType());
+                            addTradeableObject(GoodPanel, t.getType(),t.getMyID());
                             break;
                         case "RealEstate":
-                            addTradeableObject(EstatePanel, t.getType());
+                            addTradeableObject(EstatePanel, t.getType(),t.getMyID());
                             break;
                     }
                 }
@@ -344,7 +339,7 @@ public class JFrameMarket extends JFrame {
 
 
 
-   public JLabel tradableInfo = new JLabel("");
+    public JLabel tradableInfo = new JLabel("");
     public void constructNews(String text)
     {
 
@@ -354,24 +349,26 @@ public class JFrameMarket extends JFrame {
     public void constructTradeableObject(){
         ArrayList<Tradable> tradables = market.getAssets();
         for (int i = 0; i < tradables.size(); i++) {
+            int id = tradables.get(i).getMyID();
+
             String labelText=tradables.get(i).toString();
             tradableInfo.setText(labelText);
             switch (tradables.get(i).getType()) {
                 case "Stock":
-                    addTradeableObject(StockPanel,tradableInfo.getText());
+                    addTradeableObject(StockPanel,tradableInfo.getText(),id);
                     break;
 
                 case "Crypto":
 
-                    addTradeableObject(CryptoPanel,tradableInfo.getText());
+                    addTradeableObject(CryptoPanel,tradableInfo.getText(),id);
                     break;
 
                 case "Good":
-                    addTradeableObject(GoodPanel,tradableInfo.getText());
+                    addTradeableObject(GoodPanel,tradableInfo.getText(),id);
                     break;
 
                 case "RealEstate":
-                    addTradeableObject(EstatePanel,tradableInfo.getText());
+                    addTradeableObject(EstatePanel,tradableInfo.getText(),id);
                     break;
             }
 
@@ -379,20 +376,23 @@ public class JFrameMarket extends JFrame {
     }
     public  void searchTradeableObject(JPanel panel)
     {
-        Market a = new Market();
 
         JPanel otherPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         String text= jTextField1.getText();
-        a.search(text);
+        ArrayList<Tradable> a = market.search(text);
+
 
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weighty = 1.0;
 
         otherPanel.setBorder(BorderFactory.createLineBorder(backgroundColor,1));
         otherPanel.setBackground(backgroundColor);
-        for(int i = 0; i< a.res.size();i++)
+
+        for(int i = 0; i< a.size();i++)
         {
+            int id = a.get(i).getMyID();
+
             JPanel tempPanel = new JPanel(){
                 @Override
                 public Dimension getPreferredSize()
@@ -401,22 +401,11 @@ public class JFrameMarket extends JFrame {
                 }
             };
             tempPanel.setLayout(new FlowLayout());
-            JLabel text1 = new JLabel(a.res.get(i).toString());
+            JLabel text1 = new JLabel(a.get(i).toString());
             text1.setForeground(itemColor);
             tempPanel.add(text1);
             JButton buyBut = new JButton("BUY");
-            int finalI = i;
-            buyBut.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        market.buy(user, a.res.get(finalI).getMyID(), "DAY " + day);
-                        System.out.println("Buy");
-                    }
-                    catch(Exception t){}
-                }
-            });
-
+            buyBut.addActionListener(e -> buyButtonActionPerformed(id));
             tempPanel.add(buyBut);
             tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
             tempPanel.setBackground(backgroundColor);
@@ -428,7 +417,7 @@ public class JFrameMarket extends JFrame {
     }
 
 
-    public void addTradeableObject(JPanel panel, String text) {
+    public void addTradeableObject(JPanel panel, String text,int id) {
         ArrayList<Tradable> tradables = market.getAssets();
         JPanel otherPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -436,6 +425,8 @@ public class JFrameMarket extends JFrame {
         gbc.weighty = 1.0;
         otherPanel.setBorder(BorderFactory.createLineBorder(backgroundColor,1));
         otherPanel.setBackground(backgroundColor);
+
+
 
 
             JPanel tempPanel = new JPanel(){
@@ -452,6 +443,7 @@ public class JFrameMarket extends JFrame {
 
             tempPanel.add(text1);
             JButton buyBut = new JButton("BUY");
+             buyBut.addActionListener(e -> buyButtonActionPerformed(id));
 
             tempPanel.add(buyBut);
             tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
@@ -467,5 +459,14 @@ public class JFrameMarket extends JFrame {
     }
 
 
-}
+    private void buyButtonActionPerformed(int ID)
+    {
+        try {
+            System.out.println(Market.findTradableByID(ID));
+            market.buy(ID,"DAY " + day);
+            System.out.println("bought");
+        }
+        catch(Exception t){}
+    }
 
+}
