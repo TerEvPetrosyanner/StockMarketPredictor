@@ -16,10 +16,8 @@ public class JFrameProfile extends JFrame {
     private JButton predictButton;
     private JButton SELLButton;
     private JButton marketButton;
-    private Owner user;
 
     public JFrameProfile(Owner user) {
-        this.user = user;
         setContentPane(panel1);
         setTitle("Bazzar");
         setSize(1600,820);

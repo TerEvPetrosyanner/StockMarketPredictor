@@ -6,6 +6,7 @@ import Owner.Owner;
 import Tradable.Tradable;
 import Utility.CustomSlowMap;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -113,7 +114,7 @@ public class Market {
     }
 
     private static ArrayList<Tradable> assets;
-    private ArrayList<Transaction> history;
+    public ArrayList<Transaction> history;
     private static Owner ownerProfile = new Owner();
     public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP} //Why is it here not in Money?
 
@@ -140,37 +141,42 @@ public class Market {
     }
     public static boolean removeTradableById(int id){
         for(int i = 0; i<assets.size(); i++){
+
             if(assets.get(i).getMyID() == id) {
+                System.out.println("removed");
                 assets.remove(i);
                 return true;
             }
         }
         return false;
     }
-    public void sell(Owner owner, int tradableId, String date) throws FailedTransactionException {
+    public void sell(int tradableId, String date) throws FailedTransactionException {
         //The operation of Owner change
-        Transaction t = new Transaction(owner, tradableId, date, Transaction.TransactionType.SELL);
-        DataReader.addTransaction(t);
+        Transaction t = new Transaction(ownerProfile, tradableId, date, Transaction.TransactionType.SELL);
         if(t.processTransaction()){
             System.out.println("Transaction approved: " + t.toString());
-        } else {
-            throw new FailedTransactionException("Transaction failed: " + t);
-        }
-    }
-    public void buy(Owner owner, int tradableId, String date) throws FailedTransactionException {
-        //The operation of Owner change
-        Transaction t = new Transaction(owner, tradableId, date, Transaction.TransactionType.BUY);
-        DataReader.addTransaction(t);
-        if(t.processTransaction()){
-            System.out.println("Transaction approved: " + t.toString());
-        } else {
-            throw new FailedTransactionException("Transaction failed: " + t);
-        }
-    }
+            DataReader.addTransaction(t);
 
-   public ArrayList<Tradable> res = new ArrayList<Tradable>();
+        } else {
+            throw new FailedTransactionException("Transaction failed: " + t);
+        }
+    }
+    public void buy(int tradableId, String date) throws FailedTransactionException {
+        //The operation of Owner change
+        Transaction t = new Transaction(ownerProfile, tradableId, date, Transaction.TransactionType.BUY);
+        System.out.println("AAA");
+        System.out.println(t.processTransaction());
+        if(t.processTransaction()){
+            System.out.println("Transaction approved: " + t.toString());
+        } else {
+            System.out.println("Transaction failed");
+            DataReader.addTransaction(t);
+            throw new FailedTransactionException("Transaction failed: " + t);
+        }
+    }
 
     public ArrayList<Tradable> search(String s){
+        ArrayList<Tradable> res = new ArrayList<>();
         for (Tradable asset : assets) {
             if (asset.toString().toLowerCase().contains(s.toLowerCase())) {
                 res.add((Tradable) asset.clone());
