@@ -52,6 +52,7 @@ public class DataReader {
             }
         }
         scanner.close();
+
         return new ArrayList<>(result);
     }
 

@@ -11,7 +11,7 @@ public class Good extends Tradable {
         Kg
     }
 
-    public static final TradableType type = TradableType.Money;
+    public static final TradableType type = TradableType.Good;
     private UnitType unitType;
     private Money valueInMoney;
     private String goodName;
