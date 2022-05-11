@@ -1,5 +1,5 @@
 import UI.JFrameMarket;
-import UI.JFrameProfile;
+import UI.  JFrameProfile;
 
 public class Main {
     public static void main(String[] args) {

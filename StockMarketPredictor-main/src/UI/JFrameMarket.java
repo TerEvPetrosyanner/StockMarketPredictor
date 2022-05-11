@@ -159,7 +159,6 @@ public class JFrameMarket extends JFrame {
         jTabbedPane1.addTab("Real Estate", innerEstatePanel);
         jTabbedPane1.addTab("Search", innerGlobalPanel);
 
-        jTabbedPane1.addTab("Transactions", new JLabel("Transactions"));
         jTabbedPane1.setBackground(backgroundColor);
         jTabbedPane1.setForeground(itemColor);
 
@@ -484,5 +483,7 @@ public class JFrameMarket extends JFrame {
              }
         catch(Exception t){}
     }
+
+
 
 }

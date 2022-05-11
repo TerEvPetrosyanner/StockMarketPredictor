@@ -50,3 +50,7 @@
 14|DAY 20|John Doe|Crypto|16|BUY
 14|DAY 20|John Doe|Crypto|16|BUY
 14|DAY 20|John Doe|Crypto|16|BUY
+28|DAY 10|John Doe|Crypto|5|BUY
+28|DAY 10|John Doe|Crypto|5|BUY
+28|DAY 10|John Doe|Crypto|5|BUY
+28|DAY 10|John Doe|Crypto|5|BUY
