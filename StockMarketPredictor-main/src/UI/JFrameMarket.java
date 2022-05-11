@@ -107,6 +107,7 @@ public class JFrameMarket extends JFrame {
         StockPanel.setBackground(backgroundColor);
         StockPanel.setLayout(tradableLayout);
 
+
         //crypto
         BoxLayout ctradableLayout = new BoxLayout(CryptoPanel, BoxLayout.Y_AXIS);
 
@@ -136,6 +137,7 @@ public class JFrameMarket extends JFrame {
         EstatePanel.setBackground(backgroundColor);
         EstatePanel.setLayout(rtradableLayout);
         //Global Search
+
         BoxLayout globalLayout = new BoxLayout(GlobalPanel, BoxLayout.Y_AXIS);
         JScrollPane innerGlobalPanel = new JScrollPane();
         jTabbedPane1.add(innerGlobalPanel);
@@ -405,7 +407,7 @@ public class JFrameMarket extends JFrame {
             text1.setForeground(itemColor);
             tempPanel.add(text1);
             JButton buyBut = new JButton("BUY");
-            buyBut.addActionListener(e -> buyButtonActionPerformed(id));
+            buyBut.addActionListener(e -> buyButtonActionPerformed(panel,id));
             tempPanel.add(buyBut);
             tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
             tempPanel.setBackground(backgroundColor);
@@ -417,55 +419,60 @@ public class JFrameMarket extends JFrame {
     }
 
 
-    public void addTradeableObject(JPanel panel, String text,int id) {
+    public void addTradeableObject(JPanel panel, String text, int id) {
         ArrayList<Tradable> tradables = market.getAssets();
         JPanel otherPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weighty = 1.0;
-        otherPanel.setBorder(BorderFactory.createLineBorder(backgroundColor,1));
+        otherPanel.setBorder(BorderFactory.createLineBorder(backgroundColor, 1));
         otherPanel.setBackground(backgroundColor);
 
+        JPanel tempPanel = new JPanel() {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(1200, 45);
+            }
+        };
 
+        tempPanel.setLayout(new FlowLayout());
+        JLabel text1 = new JLabel(text);
+        text1.setForeground(itemColor);
 
+        tempPanel.add(text1);
+        JButton buyBut = new JButton("BUY");
+        buyBut.addActionListener(e -> buyButtonActionPerformed(panel,id));
+        tempPanel.add(buyBut);
+        tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
+        tempPanel.setBackground(backgroundColor);
 
-            JPanel tempPanel = new JPanel(){
-                @Override
-                public Dimension getPreferredSize()
-                {
-                    return new Dimension(1200,45);
-                }
-            };
-
-            tempPanel.setLayout(new FlowLayout());
-            JLabel text1 = new JLabel(text);
-            text1.setForeground(itemColor);
-
-            tempPanel.add(text1);
-            JButton buyBut = new JButton("BUY");
-             buyBut.addActionListener(e -> buyButtonActionPerformed(id));
-
-            tempPanel.add(buyBut);
-            tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
-            tempPanel.setBackground(backgroundColor);
-
-            otherPanel.add(tempPanel, gbc);
+        otherPanel.add(tempPanel, gbc);
 
         panel.add(otherPanel);
 
 
 
-
+    }
+    private void update(JPanel panel)
+    {
+        delete(panel);
+        constructTradeableObject();
+    }
+    private void delete(JPanel panel)
+    {
+        panel.removeAll();
     }
 
 
-    private void buyButtonActionPerformed(int ID)
+    private void buyButtonActionPerformed(JPanel panel,int ID)
     {
+        Tradable a = Market.findTradableByID(ID);
         try {
             System.out.println(Market.findTradableByID(ID));
             market.buy(ID,"DAY " + day);
             System.out.println("bought");
-        }
+            update(panel);
+             }
         catch(Exception t){}
     }
 
