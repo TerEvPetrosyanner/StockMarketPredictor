@@ -17,7 +17,7 @@ public class Owner{
 
 
     public Owner(){
-        this("John Doe", null, new BigDecimal(10000));
+        this("John Doe", new ArrayList<Tradable>(), new BigDecimal(10000));
     }
     public Owner(String name, ArrayList<Tradable> assets, BigDecimal netWorth){
         this.name = name;

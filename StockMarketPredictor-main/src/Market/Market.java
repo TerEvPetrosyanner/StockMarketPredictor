@@ -106,8 +106,15 @@ public class Market {
                 Tradable t = findTradableByID(tradableID);
                 if(t == null) return false;
                 if(!ownerProfile.addNetWorth(t.getValueInMoney().negate())) return false;
+                System.err.println("test2");
+
                 ownerProfile.addAsset((Tradable) t.clone());
-                removeTradableById(tradableID);
+                if(!removeTradableById(tradableID)) {
+                    System.out.println("false");
+                    return false;
+                }
+                System.out.println(this.toString());
+
             }
             return true;
         }
@@ -140,6 +147,7 @@ public class Market {
         return null;
     }
     public static boolean removeTradableById(int id){
+        System.err.println("do");
         for(int i = 0; i<assets.size(); i++){
 
             if(assets.get(i).getMyID() == id) {
