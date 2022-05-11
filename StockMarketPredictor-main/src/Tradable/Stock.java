@@ -1,5 +1,7 @@
 package Tradable;
 
+import Utility.Money;
+
 import java.math.BigDecimal;
 
 public class Stock extends Tradable{
@@ -9,14 +11,18 @@ public class Stock extends Tradable{
 
     public Stock (){
         valueInMoney = new Money(new BigDecimal(1), "USD");
+        name = "PEAR";
     }
     public Stock (String representation) {
-        this();
-        String[] parts = representation.split(" | ");
-        if(parts.length != 2) return;
+        String[] parts = representation.split(" \\| ");
+
+        for(String part : parts){
+            System.out.println(part);
+        }
+        if(parts.length != 3) return;
         if(!parts[0].equals("Stock")) return;
 
-        this.valueInMoney = new Money(new BigDecimal(parts[2]), "USD");
+        this.valueInMoney = new Money(new BigDecimal(parts[2].substring(1)), "USD");
         this.name = parts[1];
 
     }
@@ -36,7 +42,7 @@ public class Stock extends Tradable{
     }
 
     public String toString () {
-        return "Stock | " + this.name + " | " + this.valueInMoney;
+        return "Stock | " + this.name + " | " + this.valueInMoney.getValueInMoney() + " " + this.valueInMoney.getCurrency();
     }
 
     public String getName() {return this.name; }

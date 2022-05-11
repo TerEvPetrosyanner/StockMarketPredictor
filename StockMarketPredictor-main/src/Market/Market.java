@@ -4,7 +4,7 @@ package Market;
 import Exceptions.FailedTransactionException;
 import Owner.Owner;
 import Tradable.Tradable;
-import Tradable.CustomSlowMap;
+import Utility.CustomSlowMap;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import DataReading.DataReader;
 public class Market {
     public static class Event {
         private final String[] descriptions = new String[]{"Civil war", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial", "Thanos attack", "Spider Man Died","Johnny Depp lost trial"};
-        private final CustomSlowMap<Integer, BigDecimal> effect = new CustomSlowMap<>(new Integer[]{0,1,2,3,4,5},new BigDecimal[]{new BigDecimal(0.17) });
+        private final CustomSlowMap<Integer, BigDecimal> effect = new CustomSlowMap<>(new Integer[]{0,1,2,3,4,5},new BigDecimal[]{new BigDecimal(0.89), new BigDecimal(0.95),new BigDecimal(0.77),new BigDecimal(0.91),new BigDecimal(0.87),new BigDecimal(0.90) });
         private final int eventNum;
 
 

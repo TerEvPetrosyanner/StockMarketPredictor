@@ -411,6 +411,7 @@ public class JFrameMarket extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     try {
                         market.buy(user, a.res.get(finalI).getMyID(), "DAY " + day);
+                        System.out.println("Buy");
                     }
                     catch(Exception t){}
                 }

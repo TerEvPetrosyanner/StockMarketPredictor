@@ -1,34 +1,3 @@
-Stock | AAPL | Apple Inc. | $152.47
-RealEstate | 10M | Apple Inc. | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
-Crypto | ETH | Ethereum | $152.47
-Crypto | ETH | Ethereum | $152.47
-Crypto | BTC | Bitcoin | $152.47
-Crypto | ETH | Ethereum | $152.47
-Crypto | ETH | Ethereum | $152.47
-Crypto | BTC | Bitcoin | $152.47
-RealEstate | 10M | Apple Inc. | $152.47
-RealEstate | 10M | Apple Inc. | $152.47
-Crypto | ETH | Ethereum | $152.47
-Crypto | ETH | Ethereum | $152.47
-Crypto | BTC | Bitcoin | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
-Crypto | BTC | Bitcoin | $152.47
-Crypto | BTC | Bitcoin | $152.47
-Crypto | BTC | Bitcoin | $152.47
-Crypto | BTC | Bitcoin | $152.47
-Stock | AAPL | Apple Inc. | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
-Stock | AAPL | Apple Inc. | $152.47
-Stock | AAPL | Apple Inc. | $152.47
-Stock | AAPL | Apple Inc. | $152.47
-Stock | AAPL | Apple Inc. | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
-Crypto | AAPL | Apple Inc. | $152.47
+Stock | AAPL | $152.47
+
 

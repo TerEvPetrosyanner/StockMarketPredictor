@@ -72,7 +72,7 @@ public abstract class Tradable implements Cloneable {
     }
 
 
-    //public abstract int getID();
+    public int getID(){return lastId;};
 
 
 }

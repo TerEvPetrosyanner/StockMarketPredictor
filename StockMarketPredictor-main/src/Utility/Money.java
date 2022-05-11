@@ -1,9 +1,9 @@
-package Tradable;
+package Utility;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class Money extends Tradable {
+public class Money {
     /**
      * Enum type for money currency. Supports 5 currencies:
      * USD - United States Dollar
@@ -13,7 +13,7 @@ public class Money extends Tradable {
      * GBP - Pound sterling
      */
 
-    public static final TradableType type = TradableType.Money;
+    //public static final Tradable.Tradable.TradableType type = TradableType.Money;
 
 
     /**
@@ -57,10 +57,9 @@ public class Money extends Tradable {
         amount = new BigDecimal(newValueInDollars.toString());
     }
 
-    @Override
-    public String getType() {
-        return type.toString();
-    }
+//    public String getType() {
+//        return type.toString();
+//    }
 
     public void setAmount(BigDecimal amount) {
         //Checks?

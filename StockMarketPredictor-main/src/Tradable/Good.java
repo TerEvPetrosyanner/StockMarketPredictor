@@ -1,5 +1,7 @@
 package Tradable;
 
+import Utility.Money;
+
 import java.math.BigDecimal;
 
 public class Good extends Tradable {
@@ -25,7 +27,7 @@ public class Good extends Tradable {
 
     public Good(String representation){
         this();
-        String[] parts = representation.split(" | ");
+        String[] parts = representation.split(" \\| ");
         if(parts.length != 7) return;
         if(!parts[0].equals("Good")) return;
 

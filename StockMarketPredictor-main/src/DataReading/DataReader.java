@@ -4,7 +4,6 @@ import Market.Market;
 import Market.Market.Transaction;
 import Tradable.Tradable;
 import Tradable.Crypto;
-import Tradable.Money;
 import Tradable.Good;
 import Tradable.Stock;
 import Tradable.RealEstate;
@@ -34,13 +33,13 @@ public class DataReader {
         //Change to count, so like the first entries for getTradables then for seperate
         while (scanner.hasNextLine()){
             currentLine = scanner.nextLine();
-            switch (currentLine.split(" | ")[0]) {
+            switch (currentLine.split(" \\| ")[0]) {
                 case "Crypto":
                     result.add(new Crypto(currentLine));
                     break;
-                case "Money":
-                    result.add(new Money(currentLine));
-                    break;
+//                case "Money":
+//                    result.add(new Money(currentLine));
+//                    break;
                 case "RealEstate":
                     result.add(new RealEstate(currentLine));
                     break;

@@ -1,5 +1,7 @@
 package Tradable;
 
+import Utility.Money;
+
 import java.math.BigDecimal;
 
 public class RealEstate extends Tradable{
@@ -32,7 +34,7 @@ public class RealEstate extends Tradable{
 
     public RealEstate(String representation){
         this();
-        String[] parts = representation.split(" | ");
+        String[] parts = representation.split(" \\| ");
         if(parts.length != 4) return;
         if(!parts[0].equals("RealEstate")) return;
 

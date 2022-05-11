@@ -1,16 +1,17 @@
 package Tradable;
 
-import Owner.Owner;
+import Utility.CustomSlowMap;
+import Utility.Money;
 
 import java.math.BigDecimal;
 
-public class Crypto extends Money {
+public class Crypto extends Tradable {
     //Maybe separate classes for fungible and non-fungible
     //Non-fungible has to be immutable, while fungible mutable
-    private BigDecimal amount;
+    private Money valueInMoney;
     public static final TradableType type = TradableType.Crypto;
 
-    public enum CryptoCurrency {USDT, BTC, ETH, ADA, SOL;}
+//    public enum CryptoCurrency {USDT, BTC, ETH, ADA, SOL;}
     private CustomSlowMap currencyMap = new CustomSlowMap(new String[]{"USDT", "BTC", "ETH", "ADA", "SOL"},
             new BigDecimal[]{BigDecimal.valueOf(1),
                     BigDecimal.valueOf(42_475),
@@ -29,25 +30,40 @@ public class Crypto extends Money {
 
     public Crypto(String currency, BigDecimal amount){
         this.currency = currency;
-        this.amount = new BigDecimal(amount.toString());
+        this.valueInMoney = new Money(amount.toString());
     }
 
     public Crypto(String representation){
         this("BTC", new BigDecimal(0));
-        String[] parts = representation.split(" | ");
+        String[] parts = representation.split(" \\| ");
         if(parts.length != 3) return;
         if(!parts[0].equals("Crypto")) return;
 
         this.currency = parts[1];
-        this.amount = new BigDecimal(parts[2]);
+        this.valueInMoney = new Money(parts[2]);
     }
-    public static BigDecimal liquidity(Crypto first, Crypto second, double percentage, int month) {
-        if (Crypto.changeCurrency(first.getCryptoCurrency(), first.getAmount(), second.getCryptoCurrency(), BigDecimal.ZERO).equals(second.getAmount())) {
+//    public static BigDecimal liquidity(Crypto first, Crypto second, double percentage, int month) {
+//        if (Crypto.changeCurrency(first.getCryptoCurrency(), first.getAmount(), second.getCryptoCurrency(), BigDecimal.ZERO).equals(second.getAmount())) {
+//
+//            return first.getAmount().multiply(BigDecimal.valueOf(Math.pow(1 + percentage / 100, month / 12.0)));
+//
+//        }
+//        return BigDecimal.ZERO;
+//    }
 
-            return first.getAmount().multiply(BigDecimal.valueOf(Math.pow(1 + percentage / 100, month / 12.0)));
+    @Override
+    public String getName() {
+        return null;
+    }
 
-        }
-        return BigDecimal.ZERO;
+    @Override
+    public BigDecimal getValueInMoney() {
+        return null;
+    }
+
+    @Override
+    public void updatePrice(BigDecimal newValue) {
+
     }
 
     @Override
@@ -56,6 +72,6 @@ public class Crypto extends Money {
     }
 
     public String toString() {
-        return "Crypto | " + this.currency + " | " + this.amount;
+        return "Crypto | " + this.currency + " | " + this.valueInMoney.getValueInMoney() + " " + this.valueInMoney.getCurrency();
     }
 }
