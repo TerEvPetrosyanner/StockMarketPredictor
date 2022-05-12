@@ -3,10 +3,12 @@ package UI;
 import Market.Market;
 import Owner.Owner;
 import Tradable.Tradable;
+import com.sun.nio.sctp.NotificationHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+
 
 public class JFrameProfile extends JFrame {
     private JPanel panel1 = new JPanel();
@@ -55,7 +57,6 @@ public class JFrameProfile extends JFrame {
         JTextField textfield = new JTextField("This is text field");
         predictPan.add(lab);
         predictPan.add(textfield);
-
         walletPanel.add(predictPan,BorderLayout.CENTER);
 
         JPanel namePanel = new JPanel();
@@ -104,7 +105,7 @@ public class JFrameProfile extends JFrame {
                 text1.setForeground(itemColor);
                 tempPanel.add(text1);
                 JButton sellBut = new JButton("SELL");
-                sellBut.addActionListener(e -> destructButton(assetMainPanel,id));
+                sellBut.addActionListener(e->destructButton(user,id));
 
                 tempPanel.add(sellBut);
                 tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
@@ -118,11 +119,21 @@ public class JFrameProfile extends JFrame {
 
 
     }
-        public  void destructButton(JPanel panel,int id)
-        {
-            Tradable a = Market.findTradableByID(id);
-            panel.removeAll();
+    public  void destructButton(Owner user,int id)
+    {
+        Tradable a = Market.findTradableByID(id);
+
+        try {
+
+            user.sell(id, "DAY");
+            System.out.println("sold");
+
         }
+        catch (Exception t){}
+    }
+
+
+
 
 
 }

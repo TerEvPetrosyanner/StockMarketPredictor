@@ -406,7 +406,7 @@ public class JFrameMarket extends JFrame {
                 @Override
                 public Dimension getPreferredSize()
                 {
-                    return new Dimension(1350,45);
+                    return new Dimension(1200,45);
                 }
             };
             tempPanel.setLayout(new FlowLayout());
@@ -483,7 +483,5 @@ public class JFrameMarket extends JFrame {
              }
         catch(Exception t){}
     }
-
-
 
 }

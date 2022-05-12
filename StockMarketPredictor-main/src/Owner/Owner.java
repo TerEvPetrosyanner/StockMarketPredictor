@@ -1,4 +1,6 @@
 package Owner;
+import DataReading.DataReader;
+import Exceptions.FailedTransactionException;
 import Market.Market;
 import Utility.CustomSlowMap;
 import Tradable.Tradable;
@@ -14,7 +16,6 @@ public class Owner{
     private BigDecimal netWorth;
     private UUID uuid;
     private CustomSlowMap<String, BigDecimal> wallet;
-
 
     public Owner(){
         this("John Doe", new ArrayList<Tradable>(), new BigDecimal(10000));
@@ -75,6 +76,19 @@ public class Owner{
         return null;
     }
 
+    public void sell(int tradableId, String date) throws FailedTransactionException {
+        //The operation of Owner change
+        Market.Transaction t = new Market.Transaction(this, tradableId, date, Market.Transaction.TransactionType.SELL);
+        if(t.processTransaction()){
+            System.out.println("aaa");
+
+            System.out.println("Transaction approved: " + t.toString());
+            DataReader.addTransaction(t);
+
+        } else {
+            throw new FailedTransactionException("Transaction failed: " + t);
+        }
+    }
     public void addAsset(Tradable newAsset){
         assets.add(newAsset);
     }

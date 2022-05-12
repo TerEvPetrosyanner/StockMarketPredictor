@@ -54,3 +54,9 @@
 28|DAY 10|John Doe|Crypto|5|BUY
 28|DAY 10|John Doe|Crypto|5|BUY
 28|DAY 10|John Doe|Crypto|5|BUY
+44|DAY 202|John Doe|Crypto|5|BUY
+44|DAY 210|John Doe|Crypto|5|BUY
+30|DAY 21|John Doe|Crypto|15|BUY
+30|DAY 21|John Doe|Crypto|15|BUY
+35|DAY 54|John Doe|Crypto|16|BUY
+38|DAY 96|John Doe|Crypto|5|BUY
