@@ -76,11 +76,12 @@ public class Owner{
         return null;
     }
 
+
     public void sell(int tradableId, String date) throws FailedTransactionException {
         //The operation of Owner change
         Market.Transaction t = new Market.Transaction(this, tradableId, date, Market.Transaction.TransactionType.SELL);
         if(t.processTransaction()){
-            System.out.println("aaa");
+            System.out.println("selling");
 
             System.out.println("Transaction approved: " + t.toString());
             DataReader.addTransaction(t);

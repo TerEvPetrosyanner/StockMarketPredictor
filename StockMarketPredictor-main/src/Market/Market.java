@@ -87,13 +87,23 @@ public class Market {
         }
 
         public Transaction(Owner o, int id, String date, TransactionType transactionType){
-            Tradable t = findTradableByID(id);
-            this.transactionNum = assets.size() + 1;
-            this.date = date; //Need to get date from simulation
-            this.owner = o.getName();
-            this.tradableType = t.getType();
-            this.tradableID = id;
-            this.transactionType = transactionType;
+            if(transactionType == TransactionType.BUY) {
+                Tradable t = findTradableByID(id);
+                this.transactionNum = assets.size() + 1;
+                this.date = date; //Need to get date from simulation
+                this.owner = o.getName();
+                this.tradableType = t.getType();
+                this.tradableID = id;
+                this.transactionType = transactionType;
+            }else {
+                Tradable t = ownerProfile.findTradableByID(id);
+                this.transactionNum = assets.size() + 1;
+                this.date = date; //Need to get date from simulation
+                this.owner = o.getName();
+                this.tradableType = t.getType();
+                this.tradableID = id;
+                this.transactionType = transactionType;
+            }
         }
 
         public boolean processTransaction(){

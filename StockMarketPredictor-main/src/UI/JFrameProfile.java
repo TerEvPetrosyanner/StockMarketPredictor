@@ -7,6 +7,7 @@ import com.sun.nio.sctp.NotificationHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
@@ -28,7 +29,7 @@ public class JFrameProfile extends JFrame {
         JPanel assetPanel = new JPanel();
         assetPanel.setBorder(BorderFactory.createLineBorder(itemColor,1));
         assetPanel.setBackground(backgroundColor);
-        assetPanel.setPreferredSize(new Dimension(1200,400));
+        assetPanel.setPreferredSize(new Dimension(1100,400));
 
         JPanel walletPanel = new JPanel();
         walletPanel.setBorder(BorderFactory.createLineBorder(itemColor,1));
@@ -53,10 +54,19 @@ public class JFrameProfile extends JFrame {
         JPanel predictPan = new JPanel(new FlowLayout());
         predictPan.setBackground(backgroundColor);
         predictPan.setBorder(BorderFactory.createLineBorder(itemColor,1));
+        JLabel predictTexT= new JLabel("Money in ");
+        JTextField textfield = new JTextField();
         JButton lab = new JButton("Predict");
-        JTextField textfield = new JTextField("This is text field");
-        predictPan.add(lab);
+        JTextField finalText = new JTextField();
+        textfield.setColumns(4);
+        finalText.setColumns(4);
+        lab.addActionListener(e -> predictButton(textfield.getText(),user,finalText));
+
+        predictPan.add(predictTexT);
         predictPan.add(textfield);
+        predictPan.add(lab);
+        predictPan.add(finalText);
+
         walletPanel.add(predictPan,BorderLayout.CENTER);
 
         JPanel namePanel = new JPanel();
@@ -70,68 +80,99 @@ public class JFrameProfile extends JFrame {
         assetPanel.add(namePanel,BorderLayout.NORTH);
 
         JPanel assetMainPanel = new JPanel();
-        BoxLayout boxLay = new BoxLayout(assetMainPanel,BoxLayout.Y_AXIS);
-        assetMainPanel.setLayout(boxLay);
+
         assetMainPanel.setBackground(backgroundColor);
         assetMainPanel.setBorder(BorderFactory.createLineBorder(itemColor,1));
 
+        constructUserAssets(assetMainPanel,user);
+
+
         assetPanel.add(assetMainPanel,BorderLayout.CENTER);
 
-            JPanel otherPanel = new JPanel(new GridBagLayout());
-            GridBagConstraints gbc = new GridBagConstraints();
 
-
-
-            gbc.gridwidth = GridBagConstraints.REMAINDER;
-            gbc.weighty = 1.0;
-
-            otherPanel.setBorder(BorderFactory.createLineBorder(backgroundColor,1));
-            otherPanel.setBackground(backgroundColor);
-
-            for(int i = 0 ;i< user.getAssets().size();i++){
-
-                String text= user.getAssets().get(i).toString();
-                int id = user.getAssets().get(i).getMyID();
-
-                JPanel tempPanel = new JPanel(){
-                    @Override
-                    public Dimension getPreferredSize()
-                    {
-                        return new Dimension(1350,45);
-                    }
-                };
-                tempPanel.setLayout(new FlowLayout());
-                JLabel text1 = new JLabel(text);
-                text1.setForeground(itemColor);
-                tempPanel.add(text1);
-                JButton sellBut = new JButton("SELL");
-                sellBut.addActionListener(e->destructButton(user,id));
-
-                tempPanel.add(sellBut);
-                tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
-                tempPanel.setBackground(backgroundColor);
-
-                otherPanel.add(tempPanel, gbc);
-
-
-             }
-            assetMainPanel.add(otherPanel);
 
 
     }
-    public  void destructButton(Owner user,int id)
+    private void predictButton(String text,Owner user,JTextField textField)
     {
-        Tradable a = Market.findTradableByID(id);
+       int yearNum = Integer.parseInt(text);
+       BigDecimal moneyPredicted= user.predict(yearNum);
+        System.out.println(moneyPredicted);
+
+       textField.setText(moneyPredicted.toString());
+
+
+
+    }
+    private void constructUserAssets(JPanel panel,Owner user)
+    {
+        BoxLayout boxLay = new BoxLayout(panel,BoxLayout.Y_AXIS);
+        panel.setLayout(boxLay);
+        JPanel otherPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weighty = 0;
+
+
+        for(int i = 0 ;i< user.getAssets().size();i++){
+
+            String text= user.getAssets().get(i).toString();
+            int id = user.getAssets().get(i).getMyID();
+
+            JPanel tempPanel = new JPanel(){
+                @Override
+                public Dimension getPreferredSize()
+                {
+                    return new Dimension(1350,45);
+                }
+            };
+            tempPanel.setLayout(new FlowLayout());
+            JLabel text1 = new JLabel(text);
+            text1.setForeground(itemColor);
+            tempPanel.add(text1);
+            JButton sellBut = new JButton("SELL");
+            sellBut.addActionListener(e->destructButton(user,id,panel));
+
+            tempPanel.add(sellBut);
+            tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
+            tempPanel.setBackground(backgroundColor);
+
+            otherPanel.add(tempPanel, gbc);
+
+
+        }
+        panel.add(otherPanel);
+
+
+        otherPanel.setBorder(BorderFactory.createLineBorder(backgroundColor,1));
+        otherPanel.setBackground(backgroundColor);
+
+    }
+
+
+    private   void destructButton(Owner user,int id,JPanel panel)
+    {
+        Tradable a = user.findTradableByID(id);
 
         try {
 
             user.sell(id, "DAY");
-            System.out.println("sold");
-
+            System.out.println(a.toString() + " SOLD" );
+            update(panel,user);
         }
         catch (Exception t){}
     }
+    private void update(JPanel panel, Owner user)
+    {
+       delete(panel);
+        constructUserAssets(panel,user);
 
+    }
+    private void delete(JPanel panel)
+    {
+        panel.removeAll();
+    }
 
 
 

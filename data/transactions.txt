@@ -60,3 +60,31 @@
 30|DAY 21|John Doe|Crypto|15|BUY
 35|DAY 54|John Doe|Crypto|16|BUY
 38|DAY 96|John Doe|Crypto|5|BUY
+32|DAY|John Doe|Stock|1|SELL
+31|DAY|John Doe|Stock|3|SELL
+32|DAY|John Doe|Stock|1|SELL
+31|DAY|John Doe|Stock|2|SELL
+32|DAY|John Doe|Stock|3|SELL
+33|DAY|John Doe|Stock|12|SELL
+32|DAY|John Doe|Stock|1|SELL
+33|DAY|John Doe|Stock|2|SELL
+33|DAY|John Doe|Stock|13|SELL
+34|DAY|John Doe|Stock|12|SELL
+35|DAY|John Doe|Stock|3|SELL
+26|DAY|John Doe|Stock|2|SELL
+28|DAY|John Doe|Stock|13|SELL
+29|DAY|John Doe|Stock|3|SELL
+30|DAY|John Doe|Stock|2|SELL
+31|DAY|John Doe|Stock|1|SELL
+32|DAY|John Doe|Stock|25|SELL
+30|DAY|John Doe|Stock|12|SELL
+31|DAY|John Doe|Stock|3|SELL
+31|DAY|John Doe|Stock|3|SELL
+32|DAY|John Doe|Stock|2|SELL
+32|DAY|John Doe|Stock|24|SELL
+28|DAY|John Doe|Stock|2|SELL
+29|DAY|John Doe|Stock|3|SELL
+30|DAY|John Doe|Stock|12|SELL
+31|DAY|John Doe|Stock|13|SELL
+32|DAY|John Doe|Stock|14|SELL
+33|DAY|John Doe|Stock|1|SELL

@@ -427,7 +427,6 @@ public class JFrameMarket extends JFrame {
 
 
     public void addTradeableObject(JPanel panel, String text, int id) {
-        ArrayList<Tradable> tradables = market.getAssets();
         JPanel otherPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
