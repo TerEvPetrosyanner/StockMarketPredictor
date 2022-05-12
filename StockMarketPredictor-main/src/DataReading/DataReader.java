@@ -15,7 +15,8 @@ import java.util.Scanner;
 public class DataReader {
     private static final String tradablesPath = "./data/tradables.txt";
     private static final String transactionsPath = "./data/transactions.txt";
-    public static int count = 1;
+    //Seperate file for random?
+    public static int count = 1; //0
 
     private static final ArrayList<Tradable> result = new ArrayList<>();
     public static final ArrayList<Market.Transaction> history = new ArrayList<>();
@@ -30,16 +31,13 @@ public class DataReader {
             System.exit(0);
         }
         String currentLine;
-        //Change to count, so like the first entries for getTradables then for seperate
+
         while (scanner.hasNextLine()){
             currentLine = scanner.nextLine();
             switch (currentLine.split(" \\| ")[0]) {
                 case "Crypto":
                     result.add(new Crypto(currentLine));
                     break;
-//                case "Money":
-//                    result.add(new Money(currentLine));
-//                    break;
                 case "RealEstate":
                     result.add(new RealEstate(currentLine));
                     break;
@@ -72,17 +70,17 @@ public class DataReader {
         sc.close();
         return history;
     }
-
-    public static void addTradable(Tradable tradable) {
-        try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream(DataReader.tradablesPath, true));
-            pw.println(tradable);
-            pw.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Cannot save into the database file.");
-            System.exit(0);
-        }
-    }
+//
+//    public static void addTradable(Tradable tradable) {
+//        try {
+//            PrintWriter pw = new PrintWriter(new FileOutputStream(DataReader.tradablesPath, true));
+//            pw.println(tradable);
+//            pw.close();
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Cannot save into the database file.");
+//            System.exit(0);
+//        }
+//    }
     public static void addTransaction(Transaction transaction){
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream(DataReader.transactionsPath, true));

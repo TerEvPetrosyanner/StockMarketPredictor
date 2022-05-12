@@ -58,9 +58,14 @@ public class Good extends Tradable {
         return type.toString();
     }
 
-    public String getName() { return this.goodName; }
 
     public String toString() {
         return "Good | " + this.goodName + " | " + this.amount + " " + this.unitType + " | " + this.valueInMoney.getValueInMoney() + " " + this.valueInMoney.getCurrency();
+    }
+
+    public Good clone(){
+        Good g = (Good) super.clone();
+        g.valueInMoney = new Money(valueInMoney.getAmount(), valueInMoney.getCurrency());
+        return g;
     }
 }

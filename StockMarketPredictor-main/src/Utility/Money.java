@@ -13,12 +13,9 @@ public class Money {
      * GBP - Pound sterling
      */
 
-    //public static final Tradable.Tradable.TradableType type = TradableType.Money;
+    public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP}
 
 
-    /**
-     * The rates according to USD
-     */ //The rates should change
     private static double[] rates = {1, 0.92, 0.94, 124.30, 0.77};
 
     /**
@@ -57,12 +54,8 @@ public class Money {
         amount = new BigDecimal(newValueInDollars.toString());
     }
 
-//    public String getType() {
-//        return type.toString();
-//    }
 
     public void setAmount(BigDecimal amount) {
-        //Checks?
         this.amount = amount;
     }
 
@@ -113,9 +106,5 @@ public class Money {
 
     public String toString() {
         return "Money | " + this.currency + " | " + this.amount;
-    }
-
-    public String getName(){
-        return this.currency;
     }
 }

@@ -37,11 +37,10 @@ public class Owner{
 
     public BigDecimal predict(int year){
         BigDecimal res = netWorth;
-        //Make event a separate class? Or how to make static
         for(int i = 0; i<year; i++){
             if(i%3 == 0) {
                 Market.Event event = new Market.Event();
-                event.affect();
+                event.predictAffect(res);
             }
             res = res.add(res.multiply(BigDecimal.valueOf(5.0 / 100)));
         }

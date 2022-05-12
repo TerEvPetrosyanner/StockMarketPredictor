@@ -310,16 +310,20 @@ public class JFrameMarket extends JFrame {
     public void timeFlow() {
         timer = new Timer(2000, e -> {
             day++;
-            if(day%2 == 0) {
+            if(day%3 == 0) {
                 Market.Event event = new Market.Event();
-                //event.affect();
+                event.affect();
+                update(StockPanel);
+                update(GoodPanel);
+                update(EstatePanel);
+                update(CryptoPanel);
                 newsLine = event.getDescription();
                 JLabel temp = new JLabel(newsLine);
                 newsArea.setEditable(false);
                 newsArea.setFont(new Font("Arial", Font.BOLD, 17));
                 newsArea.append("\n" + temp.getText() + "\n");
             }
-            if(day%10 == 0) {
+            if(day%60 == 0) {
                 System.out.println("New");
                 Tradable t = DataReader.getTradable();
                 if (t != null) {
@@ -349,10 +353,6 @@ public class JFrameMarket extends JFrame {
 
 
     public JLabel tradableInfo = new JLabel("");
-    public void constructNews(String text)
-    {
-
-    }
 
 
     public void constructTradeableObject(){
@@ -462,6 +462,7 @@ public class JFrameMarket extends JFrame {
     private void update(JPanel panel)
     {
         delete(panel);
+        jLabel1.setText("Balance: " + Market.getOwnerProfile().getNetWorth());
         constructTradeableObject();
     }
     private void delete(JPanel panel)
@@ -478,7 +479,6 @@ public class JFrameMarket extends JFrame {
             market.buy(ID,"DAY " + day);
             System.out.println("bought");
             update(panel);
-            jLabel1.setText("Balance: " + Market.getOwnerProfile().getNetWorth());
              }
         catch(Exception t){}
     }

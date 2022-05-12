@@ -42,6 +42,10 @@ public class Stock extends Tradable{
         return "Stock | " + this.name + " | " + this.valueInMoney.getValueInMoney() + " " + this.valueInMoney.getCurrency();
     }
 
-    public String getName() {return this.name; }
+    public Stock clone(){
+        Stock s = (Stock) super.clone();
+        s.valueInMoney = new Money(valueInMoney.getAmount(), valueInMoney.getCurrency());
+        return s;
+    }
 
 }

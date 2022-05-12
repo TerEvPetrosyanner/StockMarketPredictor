@@ -8,6 +8,7 @@ import Utility.CustomSlowMap;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 
 import DataReading.DataReader;
@@ -29,9 +30,14 @@ public class Market {
         }
 
         public void affect() {
+            MathContext m = new MathContext(4);
             for (int i = 0; i < assets.size(); i++) {
-                assets.get(i).updatePrice(assets.get(i).getValueInMoney().multiply(effect.getValue(eventNum)));
+                assets.get(i).updatePrice(assets.get(i).getValueInMoney().multiply(effect.getValue(eventNum)).round(m));
             }
+        }
+
+        public BigDecimal predictAffect(BigDecimal netWorth){
+            return netWorth.multiply(effect.getValue(eventNum));
         }
     }
 
@@ -43,33 +49,8 @@ public class Market {
         private int tradableID;
         private TransactionType transactionType;
 
-        //Might not need the getters
-
-        public String getDate() {
-            return this.date;
-        }
-
-        public String getOwner() {
-            return this.owner;
-        }
-
-        public String getTradableType() {
-            return this.tradableType;
-        }
-
-        public int getTransactionNum() {
-            return this.transactionNum;
-        }
-
-        public int getTradableID() {
-            return this.tradableID;
-        }
-
-
-
         public enum TransactionType {BUY, SELL}
 
-        //Change String representation
         public String toString() {
             return this.transactionNum + "|" + this.date + "|" + this.owner + "|" + this.tradableType + "|" + this.tradableID + "|" + this.transactionType;
         }
@@ -82,34 +63,22 @@ public class Market {
             this.tradableType = arr[3];
             this.tradableID = Integer.parseInt(arr[4]);
             this.transactionType = arr[5].equals("BUY") ? TransactionType.BUY : TransactionType.SELL;
-            //Exception?
-
         }
 
         public Transaction(Owner o, int id, String date, TransactionType transactionType){
-            if(transactionType == TransactionType.BUY) {
-                Tradable t = findTradableByID(id);
-                this.transactionNum = assets.size() + 1;
-                this.date = date; //Need to get date from simulation
-                this.owner = o.getName();
-                this.tradableType = t.getType();
-                this.tradableID = id;
-                this.transactionType = transactionType;
-            }else {
-                Tradable t = ownerProfile.findTradableByID(id);
-                this.transactionNum = assets.size() + 1;
-                this.date = date; //Need to get date from simulation
-                this.owner = o.getName();
-                this.tradableType = t.getType();
-                this.tradableID = id;
-                this.transactionType = transactionType;
-            }
+            Tradable t = transactionType == TransactionType.BUY ? findTradableByID(id): ownerProfile.findTradableByID(id);
+            this.transactionNum = assets.size() + 1;
+            this.date = date;
+            this.owner = o.getName();
+            this.tradableType = t.getType();
+            this.tradableID = id;
+            this.transactionType = transactionType;
         }
 
         public boolean processTransaction(){
             if(transactionType == TransactionType.SELL){
                 Tradable t = ownerProfile.findTradableByID(tradableID);
-                if(t == null) return false; // Exception?
+                if(t == null) return false;
                 assets.add((Tradable) t.clone());
                 ownerProfile.addNetWorth(t.getValueInMoney());
                 return ownerProfile.removeTradableById(tradableID);
@@ -128,7 +97,6 @@ public class Market {
     private static ArrayList<Tradable> assets;
     public ArrayList<Transaction> history;
     private static Owner ownerProfile = new Owner();
-    public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP} //Why is it here not in Money?
 
     public Market(){
         assets = DataReader.getTradables();

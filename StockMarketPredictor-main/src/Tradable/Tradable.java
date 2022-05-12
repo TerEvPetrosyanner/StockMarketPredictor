@@ -14,7 +14,6 @@ public abstract class Tradable implements Cloneable {
 
     public enum TradableType {
         Crypto,
-        Money,
         RealEstate,
         Good,
         Stock
@@ -36,26 +35,6 @@ public abstract class Tradable implements Cloneable {
         }
     }
 
-    public UUID getOwnerId() {
-        return ownerId;
-    }
-
-    private void setOwnerId(UUID ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public UUID[] getHistory(){
-        return  Arrays.copyOf(this.history, this.history.length);
-    }
-
-    //public abstract void staking(double percentage, int year);
-
-    private void addHistory(){
-
-    }
-
-    public abstract String getName();
-
     public abstract BigDecimal getValueInMoney();
 
     public abstract void updatePrice(BigDecimal newValue);
@@ -70,9 +49,6 @@ public abstract class Tradable implements Cloneable {
             return null;
         }
     }
-
-
-    public int getID(){return lastId;};
 
 
 }
