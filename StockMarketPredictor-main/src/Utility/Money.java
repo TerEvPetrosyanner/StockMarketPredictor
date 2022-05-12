@@ -13,18 +13,12 @@ public class Money {
      * GBP - Pound sterling
      */
 
-    public enum MoneyCurrency {USD, EUR, CHF, JPY, GBP}
-
-
-    private static double[] rates = {1, 0.92, 0.94, 124.30, 0.77};
 
     /**
      * Instance variable of type MoneyCurrency storing the currency
      */
     private String currency;
-    private BigDecimal amount; //What to use instead of double?
-
-    //Constructors?
+    private BigDecimal amount;
 
     public String getCurrency() {
         return currency;
@@ -84,6 +78,7 @@ public class Money {
         this.currency = parts[1];
         this.amount = new BigDecimal(parts[2]);
     }
+
     public static BigDecimal changeCurrency(String initialCurrency, BigDecimal amount, String targetCurrency, BigDecimal marketPercentage) {
 
         return amount.multiply(currencyRates.getValue(initialCurrency))
@@ -93,16 +88,12 @@ public class Money {
 
     }
 
-    /**
-     * @param percentage Percentage in decimals [0:1]
-     * @param year       Amount of years
-     */
-    public void staking(BigDecimal percentage, int year) {
-
-        this.amount = amount.multiply((BigDecimal.valueOf(1).add(percentage.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP))).pow(year));
-
-//        this.amount = amount.multiply(BigDecimal.valueOf(Math.pow(1 + percentage/100, year)));
-    }
+//    public void staking(BigDecimal percentage, int year) {
+//
+//        this.amount = amount.multiply((BigDecimal.valueOf(1).add(percentage.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP))).pow(year));
+//
+////        this.amount = amount.multiply(BigDecimal.valueOf(Math.pow(1 + percentage/100, year)));
+//    }
 
     public String toString() {
         return "Money | " + this.currency + " | " + this.amount;

@@ -151,7 +151,7 @@ public class JFrameProfile extends JFrame {
     }
 
 
-    private   void destructButton(Owner user,int id,JPanel panel)
+    private void destructButton(Owner user,int id,JPanel panel)
     {
         Tradable a = user.findTradableByID(id);
 
@@ -173,9 +173,5 @@ public class JFrameProfile extends JFrame {
     {
         panel.removeAll();
     }
-
-
-
-
 }
 

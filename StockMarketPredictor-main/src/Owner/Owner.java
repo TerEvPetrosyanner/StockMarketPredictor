@@ -14,8 +14,6 @@ public class Owner{
     private String name;
     private ArrayList<Tradable> assets;
     private BigDecimal netWorth;
-    private UUID uuid;
-    private CustomSlowMap<String, BigDecimal> wallet;
 
     public Owner(){
         this("John Doe", new ArrayList<Tradable>(), new BigDecimal(10000));
@@ -26,14 +24,8 @@ public class Owner{
             this.assets = new ArrayList<Tradable>(assets);
         }
         this.netWorth = netWorth;
-        this.uuid = UUID.randomUUID();
-        this.wallet = new CustomSlowMap<String, BigDecimal>(new String[]{"USD", "EUR", "CHF", "JPY", "GBP"},
-                new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO});
     }
 
-    public UUID getId() {
-        return uuid;
-    }
 
     public BigDecimal predict(int year){
         BigDecimal res = netWorth;
@@ -77,7 +69,6 @@ public class Owner{
 
 
     public void sell(int tradableId, String date) throws FailedTransactionException {
-        //The operation of Owner change
         Market.Transaction t = new Market.Transaction(this, tradableId, date, Market.Transaction.TransactionType.SELL);
         if(t.processTransaction()){
             System.out.println("selling");
@@ -96,10 +87,4 @@ public class Owner{
         return this.name;
     }
     public ArrayList<Tradable> getAssets(){return this.assets;}
-
-
-    public CustomSlowMap<String, BigDecimal> getWallet(){
-        //Privacy leak
-        return wallet;
-    }
 }
