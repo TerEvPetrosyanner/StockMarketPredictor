@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.security.UnresolvedPermission;
 import java.util.ArrayList;
 
 
@@ -72,7 +73,7 @@ public class JFrameMarket extends JFrame {
         newsArea.setWrapStyleWord(true);
 
 
-        iconProfile = new ImageIcon(new ImageIcon("./icons/profileIcon.png").getImage().getScaledInstance(18, 18, Image.SCALE_AREA_AVERAGING));
+        iconProfile = new ImageIcon(new ImageIcon("./icons/profileIcon.png").getImage().getScaledInstance(15, 15, Image.SCALE_AREA_AVERAGING));
         JButton profilePic = new JButton(iconProfile);
         profilePic.setOpaque(false);
         profilePic.setBorderPainted(false);
@@ -80,7 +81,7 @@ public class JFrameMarket extends JFrame {
         profilePic.setMargin(new Insets(0, 16, 0, 0));
 
 
-        iconSearch = new ImageIcon(new ImageIcon("./icons/search.png").getImage().getScaledInstance(18, 18, Image.SCALE_AREA_AVERAGING));
+        iconSearch = new ImageIcon(new ImageIcon("./icons/search.png").getImage().getScaledInstance(15, 15, Image.SCALE_AREA_AVERAGING));
         JButton searchButton = new JButton(iconSearch);
         searchButton.setOpaque(false);
         searchButton.setBorderPainted(false);
@@ -198,13 +199,27 @@ public class JFrameMarket extends JFrame {
 
         GroupLayout toolBarLayout = new GroupLayout(toolBar);
         toolBar.setLayout(toolBarLayout);
+        Icon iconUpdate;
+        iconUpdate = new ImageIcon(new ImageIcon("./icons/updateIcon.png").getImage().getScaledInstance(15, 15, Image.SCALE_AREA_AVERAGING));
+        JButton updateButton = new JButton(iconUpdate);
+
+        updateButton.setBackground(backgroundColor);
+        updateButton.setPreferredSize(new java.awt.Dimension(75, 24));
 
 
+        updateButton.setOpaque(false);
+        updateButton.setBorderPainted(false);
+        updateButton.setContentAreaFilled(false);
+        updateButton.setMargin(new Insets(0, 0, 0, 1));
+        updateButton.addActionListener(e -> updateAction());
 
         toolBarLayout.setHorizontalGroup(
                 toolBarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(GroupLayout.Alignment.TRAILING, toolBarLayout.createSequentialGroup()
                                 .addContainerGap(100, Short.MAX_VALUE)
+                                .addComponent(updateButton,GroupLayout.PREFERRED_SIZE,13,GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+
                                 .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
                                 .addGap(300, 300, 300)
@@ -227,6 +242,8 @@ public class JFrameMarket extends JFrame {
                                                 .addComponent(jLabel1)
                                                 .addComponent(jLabel2))
                                         .addGroup(GroupLayout.Alignment.TRAILING, toolBarLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(updateButton,GroupLayout.PREFERRED_SIZE,22,GroupLayout.PREFERRED_SIZE)
+
                                                 .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
         );
@@ -335,10 +352,7 @@ public class JFrameMarket extends JFrame {
             if(day%10 == 0) {
                 Market.Event event = new Market.Event();
                 event.affect();
-                update(StockPanel);
-                update(GoodPanel);
-                update(EstatePanel);
-                update(CryptoPanel);
+
                 update(GlobalPanel);
                 newsLine = event.getDescription();
                 JLabel temp = new JLabel(newsLine);
@@ -375,8 +389,14 @@ public class JFrameMarket extends JFrame {
 
 
     }
+    private void updateAction()
+    {
+        update(StockPanel);
+        update(CryptoPanel);
+        update(EstatePanel);
+        update(GoodPanel);
 
-
+    }
 
     public JLabel tradableInfo = new JLabel("");
 
