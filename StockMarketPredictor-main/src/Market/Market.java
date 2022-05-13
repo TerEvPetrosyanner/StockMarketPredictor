@@ -133,19 +133,8 @@ public class Market {
         }
         return false;
     }
-    public void sell(int tradableId, String date) throws FailedTransactionException {
-        //The operation of Owner change
-        Transaction t = new Transaction(ownerProfile, tradableId, date, Transaction.TransactionType.SELL);
-        if(t.processTransaction()){
-            System.out.println("Transaction approved: " + t.toString());
-            DataReader.addTransaction(t);
 
-        } else {
-            throw new FailedTransactionException("Transaction failed: " + t);
-        }
-    }
     public void buy(int tradableId, String date) throws FailedTransactionException {
-        //The operation of Owner change
         Transaction t = new Transaction(ownerProfile, tradableId, date, Transaction.TransactionType.BUY);
         if(t.processTransaction()){
             System.out.println("Transaction approved: " + t.toString());
