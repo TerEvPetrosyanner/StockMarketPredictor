@@ -72,6 +72,7 @@ public class Market {
             this.owner = o.getName();
             this.tradableType = t.getType();
             this.tradableID = id;
+            this.tradableID = id;
             this.transactionType = transactionType;
         }
 
