@@ -88,13 +88,6 @@ public class Money {
 
     }
 
-//    public void staking(BigDecimal percentage, int year) {
-//
-//        this.amount = amount.multiply((BigDecimal.valueOf(1).add(percentage.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP))).pow(year));
-//
-////        this.amount = amount.multiply(BigDecimal.valueOf(Math.pow(1 + percentage/100, year)));
-//    }
-
     public String toString() {
         return "Money | " + this.currency + " | " + this.amount;
     }

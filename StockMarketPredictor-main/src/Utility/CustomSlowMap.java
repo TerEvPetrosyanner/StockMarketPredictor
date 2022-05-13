@@ -17,12 +17,4 @@ public class CustomSlowMap<K,V> {
         }
         return null;
     }
-
-//    public void updateValue(K key, V newValue) {
-//        for (int i = 0; i < keys.length; i++) {
-//            if (keys[i].equals(key)) {
-//               values[i] = newValue;
-//            }
-//        }
-//    }
 }

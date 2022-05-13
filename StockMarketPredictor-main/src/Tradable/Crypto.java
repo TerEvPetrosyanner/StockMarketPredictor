@@ -9,13 +9,6 @@ public class Crypto extends Tradable {
     private Money valueInMoney;
     public static final TradableType type = TradableType.Crypto;
 
-//    private CustomSlowMap currencyMap = new CustomSlowMap(new String[]{"USDT", "BTC", "ETH", "ADA", "SOL"},
-//            new BigDecimal[]{BigDecimal.valueOf(1),
-//                    BigDecimal.valueOf(42_475),
-//                    BigDecimal.valueOf(3220),
-//                    BigDecimal.valueOf(1.04),
-//                    BigDecimal.valueOf(111.03)});
-
     private String currency;
 
     public Crypto(String currency, BigDecimal amount){

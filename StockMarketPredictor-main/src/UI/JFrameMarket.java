@@ -339,6 +339,7 @@ public class JFrameMarket extends JFrame {
                 update(GoodPanel);
                 update(EstatePanel);
                 update(CryptoPanel);
+                update(GlobalPanel);
                 newsLine = event.getDescription();
                 JLabel temp = new JLabel(newsLine);
 
@@ -501,6 +502,20 @@ public class JFrameMarket extends JFrame {
         try {
             System.out.println(Market.findTradableByID(ID));
             market.buy(ID,"DAY " + day);
+//            switch(Market.findTradableByID(ID).getType()){
+//                case("Stock"):
+//                    update(StockPanel);
+//                    break;
+//                case("Crypto"):
+//                    update(CryptoPanel);
+//                    break;
+//                case("RealEstate"):
+//                    update(EstatePanel);
+//                    break;
+//                case("Good"):
+//                    update(GoodPanel);
+//                    break;
+//            }
             System.out.println("bought");
              }
         catch(Exception t){}
