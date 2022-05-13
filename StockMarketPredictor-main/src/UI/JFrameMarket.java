@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
@@ -18,6 +17,7 @@ public class JFrameMarket extends JFrame {
 
     Timer timer;
     int second;
+    private JTextArea newsArea = new JTextArea();
 
     public JPanel GlobalPanel = new JPanel();
     public JPanel EstatePanel = new JPanel();
@@ -35,7 +35,6 @@ public class JFrameMarket extends JFrame {
     JTextField jTextField1 = new JTextField();
 
     JTabbedPane jTabbedPane1 = new JTabbedPane();
-    JScrollPane innerStockPanel = new JScrollPane();
     JPanel StockPanel = new JPanel();
 
 
@@ -45,7 +44,6 @@ public class JFrameMarket extends JFrame {
 
     public String newsLine;
 
-    JTextArea newsArea = new JTextArea();
 
     private Market market;
 
@@ -97,8 +95,11 @@ public class JFrameMarket extends JFrame {
 
         BoxLayout tradableLayout = new BoxLayout(StockPanel, BoxLayout.Y_AXIS);
 //stock
+        JScrollPane innerStockPanel = new JScrollPane();
+
         jTabbedPane1.add(innerStockPanel);
 
+        innerStockPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         innerStockPanel.setViewportView(StockPanel);
         StockPanel.setBackground(backgroundColor);
         StockPanel.setLayout(tradableLayout);
@@ -111,6 +112,8 @@ public class JFrameMarket extends JFrame {
         jTabbedPane1.add(innerCryptoPanel);
 
         innerCryptoPanel.setViewportView(CryptoPanel);
+        innerCryptoPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        ;
         CryptoPanel.setBackground(backgroundColor);
         CryptoPanel.setLayout(ctradableLayout);
 
@@ -121,6 +124,7 @@ public class JFrameMarket extends JFrame {
         JScrollPane innerGoodPanel = new JScrollPane();
         jTabbedPane1.add(innerGoodPanel);
         innerGoodPanel.setViewportView(GoodPanel);
+        innerGoodPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 
         GoodPanel.setBackground(backgroundColor);
@@ -133,6 +137,8 @@ public class JFrameMarket extends JFrame {
         innerEstatePanel.setViewportView(EstatePanel);
         EstatePanel.setBackground(backgroundColor);
         EstatePanel.setLayout(rtradableLayout);
+        innerEstatePanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         //Global Search
 
         BoxLayout globalLayout = new BoxLayout(GlobalPanel, BoxLayout.Y_AXIS);
@@ -142,16 +148,9 @@ public class JFrameMarket extends JFrame {
         innerGlobalPanel.setViewportView(GlobalPanel);
         GlobalPanel.setBackground(backgroundColor);
         GlobalPanel.setLayout(globalLayout);
+        innerGlobalPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        //Transactions
-//        BoxLayout gtradableLayout = new BoxLayout(GoodPanel, BoxLayout.Y_AXIS);
-//
-//        JScrollPane innerGoodPanel = new JScrollPane();
-//        jTabbedPane1.add(innerGoodPanel);
-//
-//        innerGoodPanel.setViewportView(GoodPanel);
-//        TransactionPanel.setBackground(backgroundColor);
-//        GoodPanel.setLayout(gtradableLayout);
+
 
         jTabbedPane1.addTab("Stock", innerStockPanel);
         jTabbedPane1.addTab("Crypto", innerCryptoPanel);
@@ -231,32 +230,57 @@ public class JFrameMarket extends JFrame {
                                                 .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
         );
-        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap(50, Short.MAX_VALUE)
-                                .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                                .addContainerGap(50, Short.MAX_VALUE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap()))
-        );
-        jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3)
-                                .addContainerGap(0, Short.MAX_VALUE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addContainerGap(0, Short.MAX_VALUE)
-                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(36, Short.MAX_VALUE)))
-        );
+        BorderLayout newsLay = new BorderLayout();
+        jPanel2.setLayout(newsLay);
+
+        JLabel breakingNews = new JLabel("                   BREAKING NEWS                   ");
+        breakingNews.setForeground(itemColor);
+        breakingNews.setBorder(BorderFactory.createLineBorder(itemColor,1));
+        breakingNews.setFont(new Font("Arial",Font.BOLD,16));
+        jPanel2.add(breakingNews,BorderLayout.NORTH);
+
+        JScrollPane newsScroll = new JScrollPane();
+        jPanel2.add(newsScroll,BorderLayout.CENTER);
+
+        JPanel newsGeneratePanel = new JPanel(new GridBagLayout());
+        newsGeneratePanel.setBackground(backgroundColor);
+        newsGeneratePanel.setBorder(BorderFactory.createLineBorder(itemColor,1));
+        newsScroll.setViewportView(newsGeneratePanel);
+
+
+        GridBagConstraints gbc = new GridBagConstraints();
+
+
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weighty = 1.0;
+        newsGeneratePanel.add(newsArea);
+
+//        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
+//        jPanel2.setLayout(jPanel2Layout);
+//        jPanel2Layout.setHorizontalGroup(
+//                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGroup(jPanel2Layout.createSequentialGroup()
+//                                .addContainerGap(50, Short.MAX_VALUE)
+//                                .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+//                                .addContainerGap(50, Short.MAX_VALUE))
+//                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+//                                        .addContainerGap()
+//                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+//                                        .addContainerGap()))
+//        );
+//        jPanel2Layout.setVerticalGroup(
+//                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGroup(jPanel2Layout.createSequentialGroup()
+//                                .addContainerGap()
+//                                .addComponent(jLabel3)
+//                                .addContainerGap(0, Short.MAX_VALUE))
+//                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+//                                        .addContainerGap(0, Short.MAX_VALUE)
+//                                        .addComponent(newsArea, javax.swing.GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
+//                                        .addContainerGap(36, Short.MAX_VALUE)))
+//        );
 
 
 
@@ -319,9 +343,12 @@ public class JFrameMarket extends JFrame {
                 update(CryptoPanel);
                 newsLine = event.getDescription();
                 JLabel temp = new JLabel(newsLine);
+
+
                 newsArea.setEditable(false);
                 newsArea.setFont(new Font("Arial", Font.BOLD, 17));
                 newsArea.append("\n" + temp.getText() + "\n");
+
             }
             if(day%60 == 0) {
                 System.out.println("New");
@@ -414,7 +441,7 @@ public class JFrameMarket extends JFrame {
             text1.setForeground(itemColor);
             tempPanel.add(text1);
             JButton buyBut = new JButton("BUY");
-            buyBut.addActionListener(e -> buyButtonActionPerformed(panel,id));
+            buyBut.addActionListener(e -> buyButtonActionPerformed(id));
             tempPanel.add(buyBut);
             tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
             tempPanel.setBackground(backgroundColor);
@@ -447,9 +474,9 @@ public class JFrameMarket extends JFrame {
 
         tempPanel.add(text1);
         JButton buyBut = new JButton("BUY");
-        buyBut.addActionListener(e -> buyButtonActionPerformed(panel,id));
+        buyBut.addActionListener(e -> buyButtonActionPerformed(id));
         tempPanel.add(buyBut);
-        tempPanel.setBorder(BorderFactory.createLineBorder(itemColor,2));
+        tempPanel.setBorder(BorderFactory.createLineBorder(itemColor, 2));
         tempPanel.setBackground(backgroundColor);
 
         otherPanel.add(tempPanel, gbc);
@@ -471,14 +498,12 @@ public class JFrameMarket extends JFrame {
     }
 
 
-    private void buyButtonActionPerformed(JPanel panel,int ID)
+    private void buyButtonActionPerformed(int ID)
     {
-        Tradable a = Market.findTradableByID(ID);
         try {
             System.out.println(Market.findTradableByID(ID));
             market.buy(ID,"DAY " + day);
             System.out.println("bought");
-            update(panel);
              }
         catch(Exception t){}
     }

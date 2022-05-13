@@ -55,6 +55,7 @@ public class JFrameProfile extends JFrame {
         predictPan.setBackground(backgroundColor);
         predictPan.setBorder(BorderFactory.createLineBorder(itemColor,1));
         JLabel predictTexT= new JLabel("Money in ");
+        predictTexT.setForeground(itemColor);
         JTextField textfield = new JTextField();
         JButton lab = new JButton("Predict");
         JTextField finalText = new JTextField();
