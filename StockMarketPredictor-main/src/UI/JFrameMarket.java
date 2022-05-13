@@ -522,6 +522,11 @@ public class JFrameMarket extends JFrame {
         try {
             System.out.println(Market.findTradableByID(ID));
             market.buy(ID,"DAY " + day);
+            update(StockPanel);
+            update(EstatePanel);
+            update(CryptoPanel);
+            update(GoodPanel);
+            update(GlobalPanel);
 //            switch(Market.findTradableByID(ID).getType()){
 //                case("Stock"):
 //                    update(StockPanel);
