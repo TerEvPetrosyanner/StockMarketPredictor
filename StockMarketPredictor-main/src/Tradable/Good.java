@@ -44,6 +44,10 @@ public class Good extends Tradable {
     }
 
     @Override
+    public Money getMoney(){
+        return new Money(this.valueInMoney);
+    }
+    @Override
     public BigDecimal getValueInMoney() {
         return valueInMoney.getValueInMoney();
     }

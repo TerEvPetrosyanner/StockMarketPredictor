@@ -53,6 +53,10 @@ public class RealEstate extends Tradable{
         return type.toString();
     }
 
+    @Override
+    public Money getMoney(){
+        return new Money(this.valueInMoney);
+    }
     public String toString() {
         return  "RealEstate | " + this.address + " | " + this.area + "m2 | " + this.valueInMoney.getValueInMoney() + " " + this.valueInMoney.getCurrency();
     }

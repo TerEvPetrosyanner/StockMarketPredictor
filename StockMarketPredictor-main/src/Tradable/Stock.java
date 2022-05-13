@@ -38,6 +38,10 @@ public class Stock extends Tradable{
         return type.toString();
     }
 
+    @Override
+    public Money getMoney(){
+        return new Money(this.valueInMoney);
+    }
     public String toString () {
         return "Stock | " + this.name + " | " + this.valueInMoney.getValueInMoney() + " " + this.valueInMoney.getCurrency();
     }

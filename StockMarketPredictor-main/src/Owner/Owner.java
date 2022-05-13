@@ -4,6 +4,7 @@ import Exceptions.FailedTransactionException;
 import Market.Market;
 import Utility.CustomSlowMap;
 import Tradable.Tradable;
+import Utility.Money;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,12 +14,12 @@ import java.util.UUID;
 public class Owner{
     private String name;
     private ArrayList<Tradable> assets;
-    private BigDecimal netWorth;
+    private Money netWorth;
 
     public Owner(){
-        this("John Doe", new ArrayList<Tradable>(), new BigDecimal(10000));
+        this("John Doe", new ArrayList<Tradable>(), new Money(new BigDecimal(10000), "USD"));
     }
-    public Owner(String name, ArrayList<Tradable> assets, BigDecimal netWorth){
+    public Owner(String name, ArrayList<Tradable> assets, Money netWorth){
         this.name = name;
         if(assets != null) {
             this.assets = new ArrayList<Tradable>(assets);
@@ -28,7 +29,7 @@ public class Owner{
 
 
     public BigDecimal predict(int year){
-        BigDecimal res = netWorth;
+        BigDecimal res = netWorth.getValueInMoney();
         for(int i = 0; i<year; i++){
             if(i%3 == 0) {
                 Market.Event event = new Market.Event();
@@ -39,15 +40,15 @@ public class Owner{
         return res;
     }
 
-    public boolean addNetWorth(BigDecimal addition){
-        if(netWorth.add(addition).signum() == 1){
-            netWorth = netWorth.add(addition);
+    public boolean addNetWorth(Money addition){
+        if(netWorth.calculateAddition(addition).signum() == 1){
+            netWorth.add(addition);
             return true;
         }
         return false;
     }
-    public BigDecimal getNetWorth(){
-        return netWorth;
+    public Money getNetWorth(){
+        return new Money(netWorth);
     }
     public boolean removeTradableById(int id){
         for(int i = 0; i<assets.size(); i++){

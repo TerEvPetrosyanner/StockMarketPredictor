@@ -1,5 +1,7 @@
 package Tradable;
 
+import Utility.Money;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.UUID;
@@ -36,6 +38,8 @@ public abstract class Tradable implements Cloneable {
     }
 
     public abstract BigDecimal getValueInMoney();
+
+    public abstract Money getMoney();
 
     public abstract void updatePrice(BigDecimal newValue);
 

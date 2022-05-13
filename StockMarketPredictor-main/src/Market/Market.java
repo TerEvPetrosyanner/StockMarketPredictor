@@ -80,12 +80,12 @@ public class Market {
                 Tradable t = ownerProfile.findTradableByID(tradableID);
                 if(t == null) return false;
                 assets.add((Tradable) t.clone());
-                ownerProfile.addNetWorth(t.getValueInMoney());
+                ownerProfile.addNetWorth(t.getMoney());
                 return ownerProfile.removeTradableById(tradableID);
             } else {
                 Tradable t = findTradableByID(tradableID);
                 if(t == null) return false;
-                if(!ownerProfile.addNetWorth(t.getValueInMoney().negate())) return false;
+                if(!ownerProfile.addNetWorth(t.getMoney().negate())) return false;
 
                 ownerProfile.addAsset((Tradable) t.clone());
                 return removeTradableById(tradableID);

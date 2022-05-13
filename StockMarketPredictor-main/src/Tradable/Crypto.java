@@ -32,6 +32,10 @@ public class Crypto extends Tradable {
     }
 
     @Override
+    public Money getMoney(){
+        return new Money(this.valueInMoney);
+    }
+    @Override
     public void updatePrice(BigDecimal newValue) {
         valueInMoney.setAmount(newValue);
     }

@@ -34,25 +34,6 @@ public class Money {
                     BigDecimal.valueOf(0.94),
                     BigDecimal.valueOf(124.30),
                     BigDecimal.valueOf(0.77)});
-    /**
-     * Converts the Money from it's own currency to USD, then calculates the amount in USD($)
-     *
-     * @return converted price
-     */
-    public BigDecimal getValueInMoney() {
-        return currencyRates.getValue(currency).multiply(amount);
-    }
-
-    public void updatePrice(BigDecimal newValue) {
-        BigDecimal newValueInDollars = newValue.multiply(currencyRates.getValue(currency));
-        amount = new BigDecimal(newValueInDollars.toString());
-    }
-
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
 
     public Money() {
         this.amount = BigDecimal.ZERO;
@@ -79,6 +60,39 @@ public class Money {
         this.amount = new BigDecimal(parts[2]);
     }
 
+    /**
+     * Converts the Money from it's own currency to USD, then calculates the amount in USD($)
+     *
+     * @return converted price
+     */
+
+    public BigDecimal getValueInMoney() {
+        return currencyRates.getValue(currency).multiply(amount);
+    }
+
+    public void updatePrice(BigDecimal newValue) {
+        BigDecimal newValueInDollars = newValue.multiply(currencyRates.getValue(currency));
+        amount = new BigDecimal(newValueInDollars.toString());
+    }
+
+    public void add(Money toAdd){
+        amount = this.getValueInMoney().add(toAdd.getValueInMoney()).divide(currencyRates.getValue(currency));
+    }
+
+    public Money negate(){
+        return new Money(this.amount.negate(), this.currency);
+    }
+    public BigDecimal calculateAddition(Money toAdd){
+        return this.getValueInMoney().add(toAdd.getValueInMoney()).divide(currencyRates.getValue(currency));
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+
+
+
     public static BigDecimal changeCurrency(String initialCurrency, BigDecimal amount, String targetCurrency, BigDecimal marketPercentage) {
 
         return amount.multiply(currencyRates.getValue(initialCurrency))
@@ -91,4 +105,6 @@ public class Money {
     public String toString() {
         return "Money | " + this.currency + " | " + this.amount;
     }
+
+
 }
