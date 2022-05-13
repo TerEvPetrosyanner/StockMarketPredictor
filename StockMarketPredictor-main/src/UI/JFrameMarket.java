@@ -352,7 +352,10 @@ public class JFrameMarket extends JFrame {
             if(day%10 == 0) {
                 Market.Event event = new Market.Event();
                 event.affect();
-
+                update(StockPanel);
+                update(EstatePanel);
+                update(CryptoPanel);
+                update(GoodPanel);
                 update(GlobalPanel);
                 newsLine = event.getDescription();
                 JLabel temp = new JLabel(newsLine);

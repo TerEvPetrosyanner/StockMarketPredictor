@@ -1,1 +1,3 @@
 32|DAY|John Doe|Stock|12|SELL
+32|DAY|John Doe|Crypto|15|SELL
+33|DAY|John Doe|Stock|12|SELL
