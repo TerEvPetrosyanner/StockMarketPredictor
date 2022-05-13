@@ -246,8 +246,6 @@ public class JFrameMarket extends JFrame {
         newsGeneratePanel.setBackground(backgroundColor);
         newsGeneratePanel.setBorder(BorderFactory.createLineBorder(itemColor,1));
         newsScroll.setViewportView(newsGeneratePanel);
-
-
         GridBagConstraints gbc = new GridBagConstraints();
 
 
