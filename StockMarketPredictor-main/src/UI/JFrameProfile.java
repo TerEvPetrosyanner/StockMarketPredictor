@@ -54,13 +54,14 @@ public class JFrameProfile extends JFrame {
         JPanel predictPan = new JPanel(new FlowLayout());
         predictPan.setBackground(backgroundColor);
         predictPan.setBorder(BorderFactory.createLineBorder(itemColor,1));
-        JLabel predictTexT= new JLabel("Money in ");
+        JLabel predictTexT= new JLabel("Money in x years:");
         predictTexT.setForeground(itemColor);
         JTextField textfield = new JTextField();
         JButton lab = new JButton("Predict");
-        JTextField finalText = new JTextField();
+        JLabel finalText = new JLabel("Amount");
+        finalText.setForeground(itemColor);
         textfield.setColumns(4);
-        finalText.setColumns(4);
+        //finalText.setColumns(4);
         lab.addActionListener(e -> predictButton(textfield.getText(),user,finalText));
 
         predictPan.add(predictTexT);
@@ -94,7 +95,7 @@ public class JFrameProfile extends JFrame {
 
 
     }
-    private void predictButton(String text,Owner user,JTextField textField)
+    private void predictButton(String text,Owner user,JLabel textField)
     {
        int yearNum = Integer.parseInt(text);
        BigDecimal moneyPredicted= user.predict(yearNum);

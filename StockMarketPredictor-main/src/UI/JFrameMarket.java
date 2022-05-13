@@ -332,7 +332,7 @@ public class JFrameMarket extends JFrame {
     public void timeFlow() {
         timer = new Timer(2000, e -> {
             day++;
-            if(day%3 == 0) {
+            if(day%10 == 0) {
                 Market.Event event = new Market.Event();
                 event.affect();
                 update(StockPanel);

@@ -122,3 +122,11 @@
 34|DAY|John Doe|Crypto|4|SELL
 32|DAY|John Doe|Stock|25|SELL
 33|DAY|John Doe|Stock|1|SELL
+33|DAY 9|John Doe|Crypto|5|BUY
+31|DAY 16|John Doe|Crypto|27|BUY
+31|DAY 16|John Doe|Crypto|27|BUY
+31|DAY|John Doe|Crypto|4|SELL
+27|DAY|John Doe|Good|11|SELL
+28|DAY|John Doe|RealEstate|8|SELL
+29|DAY|John Doe|Stock|2|SELL
+30|DAY|John Doe|Stock|12|SELL
